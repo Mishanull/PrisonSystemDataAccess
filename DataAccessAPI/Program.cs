@@ -2,6 +2,7 @@ using DAOInterfaces;
 using FileContext.Guards;
 using FileContext.Prisoners;
 using FileContext.Users;
+using Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

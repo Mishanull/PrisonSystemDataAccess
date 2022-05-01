@@ -1,6 +1,6 @@
 ﻿using Entities;
 
-namespace DAOInterfaces;
+namespace Interfaces;
 
 public interface IPrisonerService
 {
@@ -8,4 +8,5 @@ public interface IPrisonerService
     public Task RemovePrisonerAsync(long id);
     public Task<Prisoner> UpdatePrisonerAsync(Prisoner? prisoner);
     public Task<Prisoner> GetPrisonerByIdAsync(long id);
+    Task<ICollection<Prisoner>> GetPrisoners();
 }

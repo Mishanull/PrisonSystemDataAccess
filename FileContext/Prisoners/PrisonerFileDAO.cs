@@ -1,5 +1,6 @@
 ﻿using DAOInterfaces;
 using Entities;
+using Interfaces;
 
 namespace FileContext.Prisoners;
 
@@ -46,5 +47,10 @@ public class PrisonerFileDAO : IPrisonerService
     {
         Prisoner foundedPrisoner = _prisonerFileContext.Prisoners.First(p => id.Equals(p.Id));
         return foundedPrisoner;
+    }
+
+    public async Task<ICollection<Prisoner>> GetPrisoners()
+    {
+        return _prisonerFileContext.Prisoners.ToList();
     }
 }

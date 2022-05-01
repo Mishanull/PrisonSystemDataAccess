@@ -1,5 +1,6 @@
 ﻿using DAOInterfaces;
 using Entities;
+using Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataAcessAPI.Controllers;
@@ -53,6 +54,22 @@ public class PrisonerController : ControllerBase
             await _prisonerService.UpdatePrisonerAsync(prisoner);
             return Ok("Prisoner "+prisoner.Id+" updated");
 
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    
+    [HttpGet]
+    public async Task<ActionResult<Prisoner>> GetPrisoners()
+    {
+        try
+        {
+            ICollection<Prisoner> prisoners = await _prisonerService.GetPrisoners();
+            PrisonersList prisonersList = new PrisonersList(prisoners);
+            return Ok(prisonersList);
         }
         catch (Exception e)
         {
