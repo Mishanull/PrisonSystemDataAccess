@@ -63,12 +63,12 @@ public class PrisonerController : ControllerBase
     
     
     [HttpGet]
-    public async Task<ActionResult<Prisoner>> GetPrisoners()
+    public async Task<ActionResult<PrisonersList>> GetPrisoners()
     {
         try
         {
             ICollection<Prisoner> prisoners = await _prisonerService.GetPrisoners();
-            PrisonersList prisonersList = new PrisonersList(prisoners);
+            PrisonersList prisonersList = new(prisoners);
             return Ok(prisonersList);
         }
         catch (Exception e)

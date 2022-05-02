@@ -3,15 +3,15 @@
 //wrapper-class
 public class PrisonersList
 {
-    private ICollection<Prisoner> prisonersList { get; set; }
+    public ICollection<Prisoner> prisoners { get; set; }
 
     public PrisonersList()
     {
-        prisonersList = new List<Prisoner>();
+        prisoners = new List<Prisoner>();
     }
 
-    public PrisonersList(ICollection<Prisoner> prisonersList)
+    public PrisonersList(ICollection<Prisoner> prisoners)
     {
-        this.prisonersList = prisonersList;
+        this.prisoners = prisoners;
     }
 }
