@@ -33,7 +33,7 @@ public class PrisonerController : ControllerBase
     
     [HttpDelete]
     [Route("{id:long}")]
-    public async Task<ActionResult<Prisoner>> RemovePrisoner([FromRoute] long id)
+    public async Task<ActionResult<String>> RemovePrisoner([FromRoute] long id)
     {
         try
         {

@@ -38,8 +38,8 @@ public class PrisonerFileContext
             new Prisoner
             {
                 Id=1,
-                Firstname = "Adam",
-                Lastname = "Smith",
+                FirstName = "Adam",
+                LastName = "Smith",
                 Ssn = 0321459584,
                 CrimeCommitted = "Murder",
                 Points = 120,

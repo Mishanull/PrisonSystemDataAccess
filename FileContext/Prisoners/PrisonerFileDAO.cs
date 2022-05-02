@@ -35,8 +35,8 @@ public class PrisonerFileDAO : IPrisonerService
     public async Task<Prisoner> UpdatePrisonerAsync(Prisoner prisoner)
     {
         Prisoner? prisonerToUpdate = GetPrisonerByIdAsync(prisoner.Id).Result;
-        prisonerToUpdate.Firstname = prisoner.Firstname;
-        prisonerToUpdate.Lastname = prisoner.Lastname;
+        prisonerToUpdate.FirstName = prisoner.FirstName;
+        prisonerToUpdate.LastName = prisoner.LastName;
         prisonerToUpdate.Ssn = prisoner.Ssn;
         prisonerToUpdate.Points = prisoner.Points;
         await _prisonerFileContext.SaveChangesAsync();
