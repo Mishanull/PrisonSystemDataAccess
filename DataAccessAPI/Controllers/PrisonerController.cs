@@ -1,9 +1,8 @@
-﻿using DAOInterfaces;
-using Entities;
+﻿using Entities;
 using Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DataAcessAPI.Controllers;
+namespace DataAccessAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]

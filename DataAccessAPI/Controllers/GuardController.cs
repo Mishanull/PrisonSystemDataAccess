@@ -2,7 +2,7 @@
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DataAcessAPI.Controllers;
+namespace DataAccessAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -20,7 +20,7 @@ public class GuardController : ControllerBase
     {
         try
         {
-            Guard toAdd = await _guardService.CreateGuard(guard);
+            Guard toAdd = await _guardService.CreateGuardAsync(guard);
             return Created($"/Guard/{toAdd.Id}", toAdd);
         }
         catch (Exception e)
@@ -31,12 +31,58 @@ public class GuardController : ControllerBase
 
     [HttpGet]
     [Route("{id:long}")]
-    public async Task<ActionResult<Guard>> GetGuardById(long id)
+    public async Task<ActionResult<Guard>> GetGuardByIdAsync(long id)
     {
         try
         {
-            Guard toGet = await _guardService.GetGuardById(id);
+            Guard toGet = await _guardService.GetGuardByIdAsync(id);
             return Ok(toGet);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpDelete]
+    [Route("{id:long}")]
+    public async Task<ActionResult<Guard>> RemoveGuard([FromRoute] long id)
+    {
+        try
+        {
+            await _guardService.RemoveGuardAsync(id);
+            return Ok("Guard " + id + " deleted");
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpPatch]
+    public async Task<ActionResult<Guard>> UpdateGuard([FromBody] Guard? guard)
+    {
+        try
+        {
+            await _guardService.UpdateGuardAsync(guard);
+            return Ok("Guard "+guard.Id+" updated");
+
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    
+    [HttpGet]
+    public async Task<ActionResult<GuardsList>> GetGuards()
+    {
+        try
+        {
+            ICollection<Guard> guards = await _guardService.GetGuards();
+            GuardsList guardsList = new(guards);
+            return Ok(guardsList);
         }
         catch (Exception e)
         {

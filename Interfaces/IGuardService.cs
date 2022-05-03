@@ -4,6 +4,9 @@ namespace DAOInterfaces;
 
 public interface IGuardService
 {
-    public Task<Guard> CreateGuard(Guard guard);
-    public Task<Guard> GetGuardById(long id);
+    public Task<Guard> CreateGuardAsync(Guard guard);
+    public Task<Guard> GetGuardByIdAsync(long id);
+    public Task RemoveGuardAsync(long id);
+    public Task<Guard> UpdateGuardAsync(Guard? guard);
+    Task<ICollection<Guard>> GetGuards();
 }

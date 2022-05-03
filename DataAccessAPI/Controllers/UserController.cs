@@ -2,7 +2,7 @@
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DataAcessAPI.Controllers;
+namespace DataAccessAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]

@@ -1,4 +1,6 @@
 using DAOInterfaces;
+using EfcData.Context;
+using EfcData.DAO;
 using FileContext.Guards;
 using FileContext.Prisoners;
 using FileContext.Users;
@@ -12,13 +14,20 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IUserService, UserFileDAO>();
-builder.Services.AddScoped<UserFileContext>();
-builder.Services.AddScoped<IGuardService, GuardFileDAO>();
-builder.Services.AddScoped< GuardFileContext>();
-builder.Services.AddScoped<IPrisonerService, PrisonerFileDAO>();
-builder.Services.AddScoped<PrisonerFileContext>();
 
+builder.Services.AddScoped<IUserService, UserDAO>();
+builder.Services.AddScoped<IGuardService, GuardDAO>(); ;
+builder.Services.AddScoped<IPrisonerService, PrisonerDAO>();
+builder.Services.AddDbContext<PrisonSystemContext>();
+
+/*
+builder.Services.AddScoped<IUserService, UserDAO>();
+builder.Services.AddScoped<UserFileContext>();
+builder.Services.AddScoped<IGuardService, GuardDAO>();
+builder.Services.AddScoped< GuardFileContext>();
+builder.Services.AddScoped<IPrisonerService, PrisonerDAO>();
+builder.Services.AddScoped<PrisonerFileContext>();
+*/
 
 
 var app = builder.Build();

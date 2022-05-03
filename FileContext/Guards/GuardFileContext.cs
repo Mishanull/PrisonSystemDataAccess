@@ -7,7 +7,7 @@ public class GuardFileContext
 {
     private string guardsFilePath = "guards.json";
 
-    private ICollection<Guard> guards;
+    private ICollection<Guard>? guards;
 
     public ICollection<Guard> Guards
     {
@@ -42,16 +42,20 @@ public class GuardFileContext
                 FirstName = "Pampalini",
                 LastName = "Hunter",
                 Email = "lonelyguard@hotmail.com",
-                PhoneNumber = "+4565984532"
+                PhoneNumber = "+4565984532",
+                Role = "jail guard"
             },
         };
         guards = help.ToList();
-        SaveChanges();
+        Task.FromResult(SaveChangesAsync());
     }
-    public void SaveChanges()
+    public async Task SaveChangesAsync()
     {
-        string serialize = JsonSerializer.Serialize(Guards);
-        File.WriteAllText(guardsFilePath,serialize);
+        string serialize = JsonSerializer.Serialize(Guards, new JsonSerializerOptions {
+            WriteIndented = true,
+            PropertyNameCaseInsensitive = false
+        });
+        await File.WriteAllTextAsync(guardsFilePath,serialize);
         guards = null;
     }
     private void LoadData()
