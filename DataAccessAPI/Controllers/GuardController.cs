@@ -64,8 +64,9 @@ public class GuardController : ControllerBase
     {
         try
         {
+            Console.WriteLine(guard);
             await _guardService.UpdateGuardAsync(guard);
-            return Ok("Guard "+guard.Id+" updated");
+            return Ok();
 
         }
         catch (Exception e)

@@ -46,12 +46,13 @@ public class PrisonerController : ControllerBase
     }
     
     [HttpPatch]
-    public async Task<ActionResult<Prisoner>> UpdatePrisoner([FromBody] Prisoner prisoner)
+    public async Task<ActionResult<Prisoner>> UpdatePrisoner([FromBody] Prisoner? prisoner)
     {
         try
         {
-            Prisoner updated = await _prisonerService.UpdatePrisonerAsync(prisoner);
-            return Ok(updated);
+            Prisoner pris=await _prisonerService.UpdatePrisonerAsync(prisoner);
+            return Ok(pris);
+
         }
         catch (Exception e)
         {

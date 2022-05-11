@@ -17,4 +17,8 @@
       <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="UIComponents\Card.razor" />
+    </ItemGroup>
+
 </Project>
