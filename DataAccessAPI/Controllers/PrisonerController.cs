@@ -50,8 +50,8 @@ public class PrisonerController : ControllerBase
     {
         try
         {
-            Prisoner pris=await _prisonerService.UpdatePrisonerAsync(prisoner);
-            return Ok(pris);
+            await _prisonerService.UpdatePrisonerAsync(prisoner);
+            return Ok();
 
         }
         catch (Exception e)
@@ -83,6 +83,7 @@ public class PrisonerController : ControllerBase
         try
         {
             Prisoner toGet = await _prisonerService.GetPrisonerByIdAsync(id);
+            Console.WriteLine(toGet.FirstName);
             return Ok(toGet);
         }
         catch (Exception e)
