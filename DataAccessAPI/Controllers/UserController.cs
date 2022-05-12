@@ -21,8 +21,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            Console.WriteLine(username);
-            User? u = await _userService.GetUserAsync(username);
+            User u = await _userService.GetUserAsync(username);
             Console.WriteLine(u);
             return Ok(u);
         }
