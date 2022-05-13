@@ -20,6 +20,7 @@ public class GuardController : ControllerBase
     {
         try
         {
+            Console.WriteLine(CreateGuard);
             Guard toAdd = await _guardService.CreateGuardAsync(guard);
             return Created($"/Guard/{toAdd.Id}", toAdd);
         }
