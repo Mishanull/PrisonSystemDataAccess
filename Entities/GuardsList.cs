@@ -2,15 +2,15 @@
 
 public class GuardsList
 {
-    public ICollection<Guard> guards { get; set; }
+    public ICollection<Guard> Guards { get; set; }
 
     public GuardsList()
     {
-        guards = new List<Guard>();
+        Guards = new List<Guard>();
     }
 
     public GuardsList(ICollection<Guard> guards)
     {
-        this.guards = guards;
+        this.Guards = guards;
     } 
 }

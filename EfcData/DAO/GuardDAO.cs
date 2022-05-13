@@ -30,6 +30,7 @@ public class GuardDAO : IGuardService
     public async Task<Guard> GetGuardByIdAsync(long id)
     {
         Guard? temp = _prisonSystemContext.Guards.First(g => g.Id == id);
+        Console.WriteLine(temp);
         return temp;
     }
 

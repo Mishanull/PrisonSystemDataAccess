@@ -18,6 +18,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserService, UserDAO>();
 builder.Services.AddScoped<IGuardService, GuardDAO>(); ;
 builder.Services.AddScoped<IPrisonerService, PrisonerDAO>();
+builder.Services.AddScoped<IWorkShiftService, WorkShiftDAO>();
 builder.Services.AddDbContext<PrisonSystemContext>();
 
 /*
