@@ -22,7 +22,9 @@ public class WorkShiftDAO : IWorkShiftService
             largestId = _prisonSystemContext.WorkShifts.Max(p => p.Id);
         }
         shift.Id = ++largestId;
-        
+
+        if (shift.Sector != null) _prisonSystemContext.Sectors.Attach(shift.Sector);
+        if (shift.Guards != null) _prisonSystemContext.Guards.AttachRange(shift.Guards);
         _prisonSystemContext.WorkShifts.Add(shift);
         await _prisonSystemContext.SaveChangesAsync();
         return shift;
@@ -41,9 +43,13 @@ public class WorkShiftDAO : IWorkShiftService
         WorkShift shiftToUpdate = GetWorkShiftByIdAsync(shiftId).Result;
         Guard? guardToAdd = await _prisonSystemContext.Guards.FindAsync(guardId);
         
-        _prisonSystemContext.Guards.AttachRange(guardToAdd);
-        shiftToUpdate.Guards?.Add(guardToAdd);
-        
+        if (shiftToUpdate.Sector != null) _prisonSystemContext.Sectors.Attach(shiftToUpdate.Sector);
+        if (guardToAdd != null)
+        {
+            _prisonSystemContext.Guards.AttachRange(guardToAdd);
+            shiftToUpdate.Guards?.Add(guardToAdd);
+        }
+
         await _prisonSystemContext.SaveChangesAsync();
         return shiftToUpdate;
     }
@@ -51,6 +57,8 @@ public class WorkShiftDAO : IWorkShiftService
     public async Task SetGuardsInWorkShiftAsync(ICollection<Guard> guards, long shiftId)
     {
         WorkShift shiftToUpdate = GetWorkShiftByIdAsync(shiftId).Result;
+        
+        if (shiftToUpdate.Sector != null) _prisonSystemContext.Sectors.Attach(shiftToUpdate.Sector);
         
         _prisonSystemContext.Guards.AttachRange(guards);
         shiftToUpdate.Guards = guards;
@@ -60,6 +68,7 @@ public class WorkShiftDAO : IWorkShiftService
     public async Task RemoveWorkShiftAsync(long shiftId)
     {
         WorkShift shiftToRemove = GetWorkShiftByIdAsync(shiftId).Result;;
+        
         _prisonSystemContext.Remove(shiftToRemove);
         await _prisonSystemContext.SaveChangesAsync();
     }
