@@ -19,6 +19,7 @@ public class Prisoner
     [Required]
     public string CrimeCommitted { get; set; }
     
+    public Sector? Sector { get; set; }
     
     public int Points { get; set; }
     
