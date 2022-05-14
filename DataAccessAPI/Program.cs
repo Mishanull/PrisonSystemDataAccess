@@ -1,6 +1,8 @@
 using DAOInterfaces;
 using EfcData.Context;
 using EfcData.DAO;
+using Entities;
+using FileContext.Alerts;
 using FileContext.Guards;
 using FileContext.Prisoners;
 using FileContext.Users;
@@ -19,6 +21,9 @@ builder.Services.AddScoped<IUserService, UserDAO>();
 builder.Services.AddScoped<IGuardService, GuardDAO>(); ;
 builder.Services.AddScoped<IPrisonerService, PrisonerDAO>();
 builder.Services.AddScoped<IWorkShiftService, WorkShiftDAO>();
+builder.Services.AddScoped<IAlertService, AlertFileDAO>();
+builder.Services.AddScoped<AlertFileContext>();
+
 builder.Services.AddDbContext<PrisonSystemContext>();
 
 /*
