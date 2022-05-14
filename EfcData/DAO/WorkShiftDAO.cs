@@ -66,13 +66,9 @@ public class WorkShiftDAO : IWorkShiftService
 
     public async Task<WorkShift> UpdateWorkShiftAsync(WorkShift shift)
     {
-        WorkShift shiftToUpdate = GetWorkShiftByIdAsync(shift.Id).Result;
-        shiftToUpdate.Start = shift.Start;
-        shiftToUpdate.End = shift.End;
-        shiftToUpdate.Guards = shift.Guards;
-        
+        _prisonSystemContext.WorkShifts.Update(shift);
         await _prisonSystemContext.SaveChangesAsync();
-        return shiftToUpdate;
+        return shift;
     }
 
     public async Task RemoveGuardFromWorkShiftAsync(long guardId, long shiftId)

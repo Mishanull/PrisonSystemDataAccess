@@ -1,6 +1,7 @@
 using EfcData.Context;
 using Entities;
 using Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace EfcData.DAO;
 
@@ -22,6 +23,7 @@ public class PrisonerDAO : IPrisonerService
         }
 
         prisoner.Id = ++largestId;
+        if (prisoner.Sector != null) _prisonSystemContext.Sectors.Attach(prisoner.Sector);
         _prisonSystemContext.Prisoners.Add(prisoner);
         await _prisonSystemContext.SaveChangesAsync();
         return prisoner;
@@ -35,23 +37,24 @@ public class PrisonerDAO : IPrisonerService
 
     public async Task<Prisoner> UpdatePrisonerAsync(Prisoner prisoner)
     {
-        Prisoner? prisonerToUpdate = GetPrisonerByIdAsync(prisoner.Id).Result;
-        prisonerToUpdate.FirstName = prisoner.FirstName;
-        prisonerToUpdate.LastName = prisoner.LastName;
-        prisonerToUpdate.Ssn = prisoner.Ssn;
-        prisonerToUpdate.Points = prisoner.Points;
+        if (prisoner.Sector != null) _prisonSystemContext.Sectors.Attach(prisoner.Sector);
+        _prisonSystemContext.Prisoners.Update(prisoner);
         await _prisonSystemContext.SaveChangesAsync();
-        return prisonerToUpdate;
+        return prisoner;
     }
 
     public async Task<Prisoner> GetPrisonerByIdAsync(long id)
     {
-        Prisoner foundedPrisoner = _prisonSystemContext.Prisoners.First(p => id.Equals(p.Id));
+        Prisoner foundedPrisoner = _prisonSystemContext.Prisoners
+            .Include(p=>p.Sector)
+            .First(p => id.Equals(p.Id));
         return foundedPrisoner;
     }
 
     public async Task<ICollection<Prisoner>> GetPrisoners()
     {
-        return _prisonSystemContext.Prisoners.ToList();
+        return _prisonSystemContext.Prisoners
+            .Include(p=>p.Sector)
+            .ToList();
     }
 }
