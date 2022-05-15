@@ -10,10 +10,11 @@ public class PrisonSystemContext: DbContext
     public DbSet<Prisoner> Prisoners { get; set; } = null!;
     public DbSet<WorkShift> WorkShifts { get; set; } = null!;
     public DbSet<Sector> Sectors { get; set; } = null!;
+    public DbSet<DaysOfWeek> DaysOfWeek { get; set; } = null!;
         
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     { 
-        optionsBuilder.UseSqlite(@"Data Source = C:\Users\asus\School\Ja-College\VIA\OneDrive - ViaUC\3rd_semester-S22\PrisonSystem\PrisonSystemDataAccess\EfcData\PrisonSystem.db");
+        optionsBuilder.UseSqlite(@"Data Source = C:\Users\Emmi\Skrivebord\OneDrive - ViaUC\Via College University - S3\SEP3\PrisonSystemDataAccess\EfcData\PrisonSystem.db");
     } 
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,6 +23,11 @@ public class PrisonSystemContext: DbContext
         modelBuilder.Entity<Prisoner>().HasKey(prisoner => prisoner.Id);
         modelBuilder.Entity<WorkShift>().HasKey(shift => shift.Id);
         modelBuilder.Entity<Sector>().HasKey(sector => sector.Id);
+        modelBuilder.Entity<DaysOfWeek>().HasKey(d => d.Id);
+
+        modelBuilder.Entity<WorkShift>()
+            .HasMany<DaysOfWeek>(ws => ws.DaysOfWeeks)
+            .WithMany(ws => ws.WorkShifts);
 
     }
 }

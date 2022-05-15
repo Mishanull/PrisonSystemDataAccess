@@ -2,6 +2,7 @@
 using Entities;
 using Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace EfcData.DAO;
 
@@ -16,17 +17,27 @@ public class WorkShiftDAO : IWorkShiftService
     
     public async Task<WorkShift> CreateWorkShiftAsync(WorkShift shift)
     {
-        long largestId = -1;
-        if (_prisonSystemContext.WorkShifts.Any())
-        {
-            largestId = _prisonSystemContext.WorkShifts.Max(p => p.Id);
-        }
-        shift.Id = ++largestId;
+        try{
+            long largestId = -1;
+            if (_prisonSystemContext.WorkShifts.Any())
+            {
+                largestId = _prisonSystemContext.WorkShifts.Max(p => p.Id);
+            }
 
-        if (shift.Sector != null) _prisonSystemContext.Sectors.Attach(shift.Sector);
-        if (shift.Guards != null) _prisonSystemContext.Guards.AttachRange(shift.Guards);
-        _prisonSystemContext.WorkShifts.Add(shift);
-        await _prisonSystemContext.SaveChangesAsync();
+            shift.Id = ++largestId;
+
+            if (shift.Sector != null) _prisonSystemContext.Sectors.Attach(shift.Sector);
+            if (shift.Guards != null) _prisonSystemContext.Guards.AttachRange(shift.Guards);
+            if (shift.DaysOfWeeks != null) _prisonSystemContext.DaysOfWeek.AttachRange(shift.DaysOfWeeks);
+            _prisonSystemContext.WorkShifts.Add(shift);
+            await _prisonSystemContext.SaveChangesAsync();
+            return shift;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message );
+        }
+
         return shift;
     }
 
