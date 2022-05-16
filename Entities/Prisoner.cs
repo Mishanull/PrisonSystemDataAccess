@@ -23,6 +23,7 @@ public class Prisoner
     
     public int Points { get; set; }
     
-    
+    //Length of sentence??
+    //Note, one? many?
     public string Note { get; set; }
 }

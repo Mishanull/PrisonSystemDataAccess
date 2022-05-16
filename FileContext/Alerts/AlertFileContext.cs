@@ -5,7 +5,7 @@ namespace FileContext.Alerts;
 
 public class AlertFileContext
 {
-    private string alertFilePath = "alerts.json";
+    private string AlertFilePath = "alerts.json";
 
     private ICollection<Alert>? _alerts;
 
@@ -27,7 +27,7 @@ public class AlertFileContext
     }
     public AlertFileContext()
     {
-        if (!File.Exists(alertFilePath))
+        if (!File.Exists(AlertFilePath))
         {
             Seed();
         }
@@ -36,9 +36,9 @@ public class AlertFileContext
     {
         Alert[] a = {
             new Alert {
-                dateTime = DateTime.Now,
-                priority = Alert.Priority.Medium,
-                text = "alert test -seed"
+                DateTime = DateTime.Now,
+                Priority = Alert.PriorityE.Medium,
+                Text = "alert test -seed"
             }
         };
         _alerts = a.ToList();
@@ -50,12 +50,12 @@ public class AlertFileContext
             WriteIndented = true,
             PropertyNameCaseInsensitive = false
         });
-        await File.WriteAllTextAsync(alertFilePath,serialize);
+        await File.WriteAllTextAsync(AlertFilePath,serialize);
         _alerts = null;
     }
     private void LoadData()
     {
-        string content = File.ReadAllText(alertFilePath);
+        string content = File.ReadAllText(AlertFilePath);
         Alerts = JsonSerializer.Deserialize<List<Alert>>(content);
     }
 }

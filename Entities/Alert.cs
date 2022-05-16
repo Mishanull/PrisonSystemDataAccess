@@ -2,12 +2,12 @@
 
 public class Alert
 {
-    public DateTime dateTime { get; set; }
-    public String text { get; set; }
+    public DateTime DateTime { get; set; }
+    public String Text { get; set; }
 
-    public Priority priority { get; set; }
+    public PriorityE Priority { get; set; }
 
-    public enum Priority
+    public enum PriorityE
     {
         Low,
         Medium,
