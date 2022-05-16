@@ -60,22 +60,6 @@ public class WorkShiftController : ControllerBase
         }
     }
 
-    [HttpPatch]
-    [Route("setGuards/{shiftId:int}")]
-    public async Task<ActionResult<WorkShift>> SetGuardsInWorkShift([FromBody] ICollection<Guard> guards, [FromRoute] long shiftId)
-    {
-        try
-        {
-            await _workShiftService.SetGuardsInWorkShiftAsync(guards, shiftId);
-            return Ok( guards.Count+ "Guards added to shift " + shiftId);
-
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
-    }
-
     [HttpDelete]
     [Route("{shiftId:long}")]
     public async Task<ActionResult<String>> RemoveWorkShift([FromRoute] long shiftId)

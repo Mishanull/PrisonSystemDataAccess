@@ -28,7 +28,6 @@ public class WorkShiftDAO : IWorkShiftService
 
             if (shift.Sector != null) _prisonSystemContext.Sectors.Attach(shift.Sector);
             if (shift.Guards != null) _prisonSystemContext.Guards.AttachRange(shift.Guards);
-            if (shift.DaysOfWeeks != null) _prisonSystemContext.DaysOfWeek.AttachRange(shift.DaysOfWeeks);
             _prisonSystemContext.WorkShifts.Add(shift);
             await _prisonSystemContext.SaveChangesAsync();
             return shift;
@@ -53,7 +52,7 @@ public class WorkShiftDAO : IWorkShiftService
     {
         WorkShift shiftToUpdate = GetWorkShiftByIdAsync(shiftId).Result;
         Guard? guardToAdd = await _prisonSystemContext.Guards.FindAsync(guardId);
-        
+
         if (shiftToUpdate.Sector != null) _prisonSystemContext.Sectors.Attach(shiftToUpdate.Sector);
         if (guardToAdd != null)
         {
@@ -63,17 +62,6 @@ public class WorkShiftDAO : IWorkShiftService
 
         await _prisonSystemContext.SaveChangesAsync();
         return shiftToUpdate;
-    }
-
-    public async Task SetGuardsInWorkShiftAsync(ICollection<Guard> guards, long shiftId)
-    {
-        WorkShift shiftToUpdate = GetWorkShiftByIdAsync(shiftId).Result;
-        
-        if (shiftToUpdate.Sector != null) _prisonSystemContext.Sectors.Attach(shiftToUpdate.Sector);
-        
-        _prisonSystemContext.Guards.AttachRange(guards);
-        shiftToUpdate.Guards = guards;
-        await _prisonSystemContext.SaveChangesAsync();
     }
 
     public async Task RemoveWorkShiftAsync(long shiftId)

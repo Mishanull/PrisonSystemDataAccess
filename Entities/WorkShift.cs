@@ -9,7 +9,7 @@ public class WorkShift
     public string Start { get; set; }
     public string End { get; set; }
     public Sector? Sector { get; set; }
-    public ICollection<DaysOfWeek>? DaysOfWeeks { get; set; } //Enum
+    public string? DaysOfWeek { get; set; }
     public ICollection<Guard>? Guards { get; set; }
     
 }
