@@ -20,6 +20,7 @@ public class GuardController : ControllerBase
     {
         try
         {
+            Console.WriteLine(CreateGuard);
             Guard toAdd = await _guardService.CreateGuardAsync(guard);
             return Created($"/Guard/{toAdd.Id}", toAdd);
         }
@@ -82,7 +83,8 @@ public class GuardController : ControllerBase
         try
         {
             ICollection<Guard> guards = await _guardService.GetGuards();
-            return Ok(guards);
+            GuardsList guardsList = new(guards);
+            return Ok(guardsList);
         }
         catch (Exception e)
         {
