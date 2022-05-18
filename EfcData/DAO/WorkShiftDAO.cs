@@ -1,6 +1,7 @@
 ﻿using EfcData.Context;
 using Entities;
 using Interfaces;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace EfcData.DAO;
@@ -31,9 +32,9 @@ public class WorkShiftDAO : IWorkShiftService
             await _prisonSystemContext.SaveChangesAsync();
             return shift;
         }
-        catch(Exception ex)
+        catch(Exception ex) when(ex.InnerException is SqliteException sex)
         {
-            Console.WriteLine(ex.Message );
+            Console.WriteLine(sex.Message);
         }
 
         return shift;
@@ -43,8 +44,18 @@ public class WorkShiftDAO : IWorkShiftService
     {
         ICollection<WorkShift> shifts = await _prisonSystemContext.WorkShifts
             .Include(shift => shift.Guards)
+            .Include(sector => sector.Sector)
             .ToListAsync();
         return shifts;
+    }
+    
+    public async Task<WorkShift> GetWorkShiftByIdAsync(long id)
+    {
+        WorkShift? shift = _prisonSystemContext.WorkShifts
+            .Include(shift => shift.Guards)
+            .Include(sector => sector.Sector)
+            .First(w => w.Id == id);
+        return shift;
     }
 
     public async Task<WorkShift> AddGuardToWorkShiftAsync(long guardId, long shiftId)
@@ -87,11 +98,5 @@ public class WorkShiftDAO : IWorkShiftService
         await _prisonSystemContext.SaveChangesAsync();
     }
     
-    private Task<WorkShift> GetWorkShiftByIdAsync(long id)
-    {
-        WorkShift? shift = _prisonSystemContext.WorkShifts
-            .Include(shift => shift.Guards)
-            .First(g => g.Id == id);
-        return Task.FromResult(shift);
-    }
+    
 }

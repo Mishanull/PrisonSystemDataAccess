@@ -35,8 +35,24 @@ public class WorkShiftController : ControllerBase
         try
         {
             ICollection<WorkShift> shifts = await _workShiftService.GetWorkShiftsAsync();
-            return Ok(shifts);
+            WorkShiftList workShiftList = new(shifts);
+            return Ok(workShiftList);
 
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpGet]
+    [Route("{id:long}")]
+    public async Task<ActionResult<WorkShift>> GetWorkShiftById(long id)
+    {
+        try
+        {
+            WorkShift workShift = await _workShiftService.GetWorkShiftByIdAsync(id);
+            return Ok(workShift);
         }
         catch (Exception e)
         {
