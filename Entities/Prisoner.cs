@@ -26,4 +26,11 @@ public class Prisoner
     //Length of sentence??
     //Note, one? many?
     public string Note { get; set; }
+
+    [Required]
+    // public DateTime EntryDate { get; set; }
+    public string EntryDate { get; set; }
+
+    [Required]
+    public int DurationInMonths { get; set; }
 }

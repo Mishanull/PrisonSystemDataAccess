@@ -23,15 +23,25 @@ public class PrisonerDAO : IPrisonerService
         }
 
         prisoner.Id = ++largestId;
+        
+        //TODO ...incrementing does not work ???
+        prisoner.Sector.OccupiedCells++;
+        _prisonSystemContext.Sectors.Update(prisoner.Sector);
         if (prisoner.Sector != null) _prisonSystemContext.Sectors.Attach(prisoner.Sector);
         _prisonSystemContext.Prisoners.Add(prisoner);
+
         await _prisonSystemContext.SaveChangesAsync();
         return prisoner;
     }
 
     public async Task RemovePrisonerAsync(long id)
     {
+        Prisoner p = await GetPrisonerByIdAsync(id);
+        p.Sector.OccupiedCells--;
+        _prisonSystemContext.Sectors.Update(p.Sector);
+        
         _prisonSystemContext.Prisoners?.Remove(_prisonSystemContext.Prisoners.First((p => p.Id == id)));
+
         await _prisonSystemContext.SaveChangesAsync();
     }
 
