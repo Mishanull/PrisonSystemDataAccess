@@ -37,7 +37,7 @@ public class AlertFileContext
         Alert[] a = {
             new Alert {
                 DateTime = DateTime.Now,
-                Priority = Alert.PriorityE.Medium,
+                Priority = Priority.Medium,
                 Text = "alert test -seed"
             }
         };

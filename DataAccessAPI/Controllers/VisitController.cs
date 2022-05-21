@@ -61,7 +61,7 @@ public class VisitController : ControllerBase
     }
     
     [HttpPatch]
-    public async Task<ActionResult<Visit>> UpdateVisitStatus([FromBody] Tuple<long,Visit.Status> idStatusPair)
+    public async Task<ActionResult<Visit>> UpdateVisitStatus([FromBody] Tuple<long,Status> idStatusPair)
     {
         try
         {

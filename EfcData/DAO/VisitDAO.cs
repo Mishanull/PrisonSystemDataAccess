@@ -34,7 +34,7 @@ public class VisitDAO : IVisitService
         return _context.Visits.First(v => v.AccessCode.Equals(accessCode));
     }
 
-    public async Task<Visit> UpdateVisitStatusAsync(long id, Visit.Status status)
+    public async Task<Visit> UpdateVisitStatusAsync(long id,Status status)
     {
         Visit? v = await _context.Visits.FindAsync(id);
         v.Status0 = status;

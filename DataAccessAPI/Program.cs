@@ -23,10 +23,11 @@ builder.Services.AddScoped<IPrisonerService, PrisonerDAO>();
 builder.Services.AddScoped<IWorkShiftService, WorkShiftDAO>();
 builder.Services.AddScoped<IVisitService, VisitDAO>();
 builder.Services.AddScoped<IAlertService, AlertFileDAO>();
-builder.Services.AddScoped<AlertFileContext>();
 
+builder.Services.AddScoped<AlertFileContext>();
 builder.Services.AddDbContext<PrisonSystemContext>();
 
+//For File Storage 
 /*
 builder.Services.AddScoped<IUserService, UserDAO>();
 builder.Services.AddScoped<UserFileContext>();

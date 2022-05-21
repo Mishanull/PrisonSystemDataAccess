@@ -1,4 +1,7 @@
-﻿using Entities;
+﻿using System.Collections;
+using System.Collections.ObjectModel;
+using System.Text.Json;
+using Entities;
 using Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +18,7 @@ public class AlertController : ControllerBase
     {
         _alertService = alertService;
     }
+
     
     [HttpPost]
     public async Task ArchiveAlert([FromBody] Alert alert)
@@ -27,6 +31,20 @@ public class AlertController : ControllerBase
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
+        }
+    }
+    [HttpGet]
+    public async Task<ActionResult<String>> GetAlerts()
+    {
+        try
+        {
+            ICollection<Alert> alerts = await _alertService.getAlertsAsync();
+            String response=JsonSerializer.Serialize(alerts);
+            return Ok(response);
+        }
+        catch(Exception e)
+        {
+            return StatusCode(500, e.Message);
         }
     }
 }
