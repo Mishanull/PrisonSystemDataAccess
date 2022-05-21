@@ -24,8 +24,4 @@
       <None Remove="PrisonSystem.db" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Migrations" />
-    </ItemGroup>
-
 </Project>

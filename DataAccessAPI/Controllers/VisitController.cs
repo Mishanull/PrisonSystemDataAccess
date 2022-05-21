@@ -61,12 +61,18 @@ public class VisitController : ControllerBase
     }
     
     [HttpPatch]
-    public async Task<ActionResult<Visit>> UpdateVisitStatus([FromBody] Tuple<long,Status> idStatusPair)
+    public async Task<ActionResult<String>> UpdateVisitStatus([FromBody] String[] request)
     {
         try
         {
-            Visit updated = await _visitService.UpdateVisitStatusAsync(idStatusPair.Item1, idStatusPair.Item2);
-            return Ok(updated);
+            string? accessCode = null;
+            if (request.Length == 3)
+            {
+                 accessCode = request[2];
+            }
+            Enum.TryParse(request[1], out Status status);
+            Visit updated = await _visitService.UpdateVisitStatusAsync(long.Parse(request[0]),status,accessCode!);
+            return Ok("success");
         }
         catch (Exception e)
         {

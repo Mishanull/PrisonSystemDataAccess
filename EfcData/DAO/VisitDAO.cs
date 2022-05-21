@@ -31,13 +31,14 @@ public class VisitDAO : IVisitService
 
     public async Task<Visit> GetVisitByAccessCodeAsync(string accessCode)
     {
-        return _context.Visits.First(v => v.AccessCode.Equals(accessCode));
+        return _context.Visits.First(v => v.AccessCode!.Equals(accessCode));
     }
 
-    public async Task<Visit> UpdateVisitStatusAsync(long id,Status status)
+    public async Task<Visit> UpdateVisitStatusAsync(long id,Status status,String code)
     {
         Visit? v = await _context.Visits.FindAsync(id);
-        v.Status0 = status;
+        v.Status = status;
+        v.AccessCode = code;
         await _context.SaveChangesAsync();
         return v;
     }
