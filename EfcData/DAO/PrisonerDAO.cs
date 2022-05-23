@@ -40,7 +40,17 @@ public class PrisonerDAO : IPrisonerService
         p.Sector.OccupiedCells--;
         _prisonSystemContext.Sectors.Update(p.Sector);
         
-        _prisonSystemContext.Prisoners?.Remove(_prisonSystemContext.Prisoners.First((p => p.Id == id)));
+        if (p.Notes != null)
+        {
+            ICollection<Note> notes = p.Notes;
+            foreach (var note in notes)
+            {
+                _prisonSystemContext.Notes.Remove(note);
+            }
+        }
+        
+        _prisonSystemContext.Prisoners?.Remove(_prisonSystemContext.Prisoners
+            .First(prisoner => prisoner.Id == id));
 
         await _prisonSystemContext.SaveChangesAsync();
     }
@@ -48,6 +58,7 @@ public class PrisonerDAO : IPrisonerService
     public async Task<Prisoner> UpdatePrisonerAsync(Prisoner prisoner)
     {
         if (prisoner.Sector != null) _prisonSystemContext.Sectors.Attach(prisoner.Sector);
+        if (prisoner.Notes != null) _prisonSystemContext.Notes.AttachRange(prisoner.Notes);
         _prisonSystemContext.Prisoners.Update(prisoner);
         await _prisonSystemContext.SaveChangesAsync();
         return prisoner;
@@ -57,6 +68,7 @@ public class PrisonerDAO : IPrisonerService
     {
         Prisoner foundedPrisoner = _prisonSystemContext.Prisoners
             .Include(p=>p.Sector)
+            .Include(p=>p.Notes)
             .First(p => id.Equals(p.Id));
         return foundedPrisoner;
     }
@@ -65,6 +77,7 @@ public class PrisonerDAO : IPrisonerService
     {
         return _prisonSystemContext.Prisoners
             .Include(p=>p.Sector)
+            .Include(p=>p.Notes)
             .ToList();
     }
 }

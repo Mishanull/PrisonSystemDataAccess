@@ -11,6 +11,7 @@ public class PrisonSystemContext: DbContext
     public DbSet<WorkShift> WorkShifts { get; set; } = null!;
     public DbSet<Sector> Sectors { get; set; } = null!;
     public DbSet<Visit> Visits { get; set; } = null!;
+    public DbSet<Note> Notes { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     { 
@@ -24,5 +25,6 @@ public class PrisonSystemContext: DbContext
         modelBuilder.Entity<WorkShift>().HasKey(shift => shift.Id);
         modelBuilder.Entity<Sector>().HasKey(sector => sector.Id);
         modelBuilder.Entity<Visit>().HasKey(visit => visit.Id);
+        modelBuilder.Entity<Note>().HasKey(note => note.Id);
     }
 }

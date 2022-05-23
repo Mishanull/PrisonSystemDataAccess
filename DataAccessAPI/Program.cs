@@ -24,8 +24,8 @@ builder.Services.AddScoped<IWorkShiftService, WorkShiftDAO>();
 builder.Services.AddScoped<IVisitService, VisitDAO>();
 builder.Services.AddScoped<ISectorService, SectorDAO>();
 builder.Services.AddScoped<IAlertService, AlertFileDAO>();
+builder.Services.AddScoped<INoteService, NoteDAO>();
 builder.Services.AddScoped<AlertFileContext>();
-
 builder.Services.AddDbContext<PrisonSystemContext>();
 
 /*

@@ -43,7 +43,6 @@ public class PrisonerFileContext
                 Ssn = 0321459584,
                 CrimeCommitted = "Murder",
                 Points = 120,
-                Note = ""
             }
            
             

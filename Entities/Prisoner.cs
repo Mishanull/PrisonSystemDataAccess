@@ -23,14 +23,12 @@ public class Prisoner
     
     public int Points { get; set; }
     
-    //Length of sentence??
-    //Note, one? many?
-    public string Note { get; set; }
+    public ICollection<Note>? Notes { get; set; }
 
     [Required]
     // public DateTime EntryDate { get; set; }
-    public string EntryDate { get; set; }
+    public DateTime EntryDate { get; set; }
 
     [Required]
-    public int DurationInMonths { get; set; }
+    public DateTime ReleaseDate { get; set; }
 }
