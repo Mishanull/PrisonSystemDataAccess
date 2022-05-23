@@ -61,22 +61,6 @@ public class PrisonerController : ControllerBase
         }
     }
     
-    
-    // [HttpGet]
-    // public async Task<ActionResult<PrisonersList>> GetPrisoners()
-    // {
-    //     try
-    //     {
-    //         ICollection<Prisoner> prisoners = await _prisonerService.GetPrisonersAsync();
-    //         PrisonersList prisonersList = new(prisoners);
-    //         return Ok(prisonersList);
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         return StatusCode(500, e.Message);
-    //     }
-    // }
-    //get prisoners with pagination
     [HttpGet]
     public async Task<ActionResult<PrisonersList>> GetPrisoners([FromQuery]int pageNumber, [FromQuery]int pageSize)
     {

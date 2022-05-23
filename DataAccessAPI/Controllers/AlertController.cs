@@ -34,11 +34,11 @@ public class AlertController : ControllerBase
         }
     }
     [HttpGet]
-    public async Task<ActionResult<String>> GetAlerts()
+    public async Task<ActionResult<String>> GetAlerts([FromQuery]int pageNumber, [FromQuery]int pageSize)
     {
         try
         {
-            ICollection<Alert> alerts = await _alertService.getAlertsAsync();
+            ICollection<Alert> alerts = await _alertService.getAlertsAsync(pageNumber, pageSize);
             String response=JsonSerializer.Serialize(alerts);
             return Ok(response);
         }
