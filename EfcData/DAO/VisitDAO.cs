@@ -24,11 +24,6 @@ public class VisitDAO : IVisitService
         return visit;
     }
 
-    public async Task<ICollection<Visit>> GetVisitsAsync()
-    {
-        return _context.Visits.ToList();
-    }
-
     public async Task<Visit> GetVisitByAccessCodeAsync(string accessCode)
     {
         try
@@ -43,8 +38,6 @@ public class VisitDAO : IVisitService
                 AccessCode = "invalid"
             };
         }
-
-        
     }
 
     public async Task<Visit> UpdateVisitStatusAsync(long id,Status status,String code)
@@ -54,5 +47,10 @@ public class VisitDAO : IVisitService
         v.AccessCode = code;
         await _context.SaveChangesAsync();
         return v;
+    }
+
+    public async Task<ICollection<Visit>> GetVisitsAsync(int pageNumber, int pageSize)
+    {
+        return _context.Visits.Skip((pageNumber-1)*pageSize).Take(pageSize).ToList();
     }
 }

@@ -17,11 +17,11 @@ public class VisitController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<ICollection<Visit>>> GetVisits()
+    public async Task<ActionResult<ICollection<Visit>>> GetVisits([FromQuery]int pageNumber, [FromQuery]int pageSize)
     {
         try
         {
-            ICollection<Visit> visits = await _visitService.GetVisitsAsync();
+            ICollection<Visit> visits = await _visitService.GetVisitsAsync(pageNumber, pageSize);
             return Ok(visits);
         }
         catch (Exception e)
