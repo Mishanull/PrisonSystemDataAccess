@@ -8,6 +8,7 @@ public interface IPrisonerService
     public Task RemovePrisonerAsync(long id);
     public Task<Prisoner> UpdatePrisonerAsync(Prisoner? prisoner);
     public Task<Prisoner> GetPrisonerByIdAsync(long id);
-    Task<ICollection<Prisoner>> GetPrisoners();
-    Task<Prisoner> GetPrisonerBySSNAsync(string ssn);
+    Task<ICollection<Prisoner>> GetPrisonersAsync();
+    Task<ICollection<Prisoner>> GetPrisonersAsync(int pageNumber, int pageSize);
+    Task<Prisoner> GetPrisonerBySsnAsync(string ssn);
 }

@@ -63,11 +63,19 @@ public class PrisonerController : ControllerBase
     
     
     [HttpGet]
-    public async Task<ActionResult<ICollection<Prisoner>>> GetPrisoners()
+    public async Task<ActionResult<ICollection<Prisoner>> GetPrisoners([FromQuery]int pageNumber, [FromQuery]int pageSize)
     {
         try
         {
-            ICollection<Prisoner> prisoners = await _prisonerService.GetPrisoners();
+            ICollection<Prisoner> prisoners;
+            if (pageNumber==0 && pageSize==0)
+            {
+                prisoners = await _prisonerService.GetPrisonersAsync();
+            }
+            else
+            {
+                prisoners = await _prisonerService.GetPrisonersAsync(pageNumber, pageSize);
+            }
             return Ok(prisoners);
         }
         catch (Exception e)
@@ -97,7 +105,7 @@ public class PrisonerController : ControllerBase
     {
         try
         {
-            Prisoner toGet = await _prisonerService.GetPrisonerBySSNAsync(ssn);
+            Prisoner toGet = await _prisonerService.GetPrisonerBySsnAsync(ssn);
             return Ok(toGet);
         }
         catch (Exception e)

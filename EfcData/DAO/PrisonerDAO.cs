@@ -73,7 +73,7 @@ public class PrisonerDAO : IPrisonerService
         return foundedPrisoner;
     }
 
-    public async Task<ICollection<Prisoner>> GetPrisoners()
+    public async Task<ICollection<Prisoner>> GetPrisonersAsync()
     {
         ICollection<Prisoner> p= _prisonSystemContext.Prisoners
             .Include(p=>p.Sector)
@@ -83,7 +83,16 @@ public class PrisonerDAO : IPrisonerService
         return p;
     }
 
-    public async Task<Prisoner> GetPrisonerBySSNAsync(string ssn)
+    public async Task<ICollection<Prisoner>> GetPrisonersAsync(int pageNumber, int pageSize)
+    {
+        return _prisonSystemContext.Prisoners
+            .Skip((pageNumber-1) * pageSize)
+            .Take(pageSize)
+            .Include(p=>p.Sector)
+            .ToList();
+    }
+
+    public async Task<Prisoner> GetPrisonerBySsnAsync(string ssn)
     {
         Prisoner prisoner = _prisonSystemContext.Prisoners
             .Include(p => p.Sector)

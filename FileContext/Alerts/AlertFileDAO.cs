@@ -22,4 +22,9 @@ public class AlertFileDAO : IAlertService
     {
         return _alertFileContext.Alerts!;
     }
+
+    public async Task<ICollection<Alert>> getAlertsAsync(int pageNumber, int pageSize)
+    {
+        return _alertFileContext.Alerts!.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+    }
 }
