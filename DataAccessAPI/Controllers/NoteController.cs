@@ -17,13 +17,12 @@ public class NoteController : ControllerBase
     }
     
     [HttpPost]
-    [Route("{prisonerId:long}")]
-    public async Task<ActionResult<Note>> AddNote([FromRoute]long prisonerId,[FromBody] string text)
+    public async Task<ActionResult<Note>> AddNote([FromBody] String[] request)
     {
         try
         {
-            Console.WriteLine(prisonerId + text);
-            await _noteService.AddNoteAsync(prisonerId,text);
+            Console.WriteLine(request);
+            await _noteService.AddNoteAsync(long.Parse(request[0]), request[1]);
             return Ok();
 
         }

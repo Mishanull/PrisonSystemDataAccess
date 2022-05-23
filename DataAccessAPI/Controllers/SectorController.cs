@@ -16,13 +16,12 @@ public class SectorController :ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<SectorList>> GetSectors()
+    public async Task<ActionResult<ICollection<Sector>>> GetSectors()
     {
         try
         {
             ICollection<Sector> sectors = await _sectorService.GetSectorsAsync();
-            SectorList sectorList = new(sectors);
-            return Ok(sectorList);
+            return Ok(sectors);
         }
         catch (Exception e)
         {

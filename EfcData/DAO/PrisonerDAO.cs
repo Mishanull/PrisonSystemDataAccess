@@ -75,10 +75,12 @@ public class PrisonerDAO : IPrisonerService
 
     public async Task<ICollection<Prisoner>> GetPrisoners()
     {
-        return _prisonSystemContext.Prisoners
+        ICollection<Prisoner> p= _prisonSystemContext.Prisoners
             .Include(p=>p.Sector)
             .Include(p=>p.Notes)
             .ToList();
+        Console.WriteLine(p);
+        return p;
     }
 
     public async Task<Prisoner> GetPrisonerBySSNAsync(string ssn)

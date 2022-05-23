@@ -83,8 +83,7 @@ public class GuardController : ControllerBase
         try
         {
             ICollection<Guard> guards = await _guardService.GetGuards();
-            GuardsList guardsList = new(guards);
-            return Ok(guardsList);
+            return Ok(guards);
         }
         catch (Exception e)
         {
