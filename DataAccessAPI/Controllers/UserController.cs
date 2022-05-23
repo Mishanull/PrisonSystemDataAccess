@@ -22,7 +22,6 @@ public class UserController : ControllerBase
         try
         {
             User u = await _userService.GetUserAsync(username);
-            Console.WriteLine(u.Role);
             return Ok(u);
         }
         catch (Exception e)

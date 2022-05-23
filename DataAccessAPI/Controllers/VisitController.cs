@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using System.Text.Json;
+using Entities;
 using Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,11 +32,12 @@ public class VisitController : ControllerBase
     
     [HttpGet]
     [Route("{accessCode}")]
-    public async Task<ActionResult<ICollection<Visit>>> GetVisitByAccessCode([FromRoute] string accessCode)
+    public async Task<ActionResult<Visit>> GetVisitByAccessCode([FromRoute] string accessCode)
     {
         try
         {
             Visit visit = await _visitService.GetVisitByAccessCodeAsync(accessCode);
+            String response=JsonSerializer.Serialize(visit);
             return Ok(visit);
         }
         catch (Exception e)
@@ -61,12 +63,18 @@ public class VisitController : ControllerBase
     }
     
     [HttpPatch]
-    public async Task<ActionResult<Visit>> UpdateVisitStatus([FromBody] Tuple<long,Visit.Status> idStatusPair)
+    public async Task<ActionResult<String>> UpdateVisitStatus([FromBody] String[] request)
     {
         try
         {
-            Visit updated = await _visitService.UpdateVisitStatusAsync(idStatusPair.Item1, idStatusPair.Item2);
-            return Ok(updated);
+            string? accessCode = null;
+            if (request.Length == 3)
+            {
+                 accessCode = request[2];
+            }
+            Enum.TryParse(request[1], out Status status);
+            Visit updated = await _visitService.UpdateVisitStatusAsync(long.Parse(request[0]),status,accessCode!);
+            return Ok("success");
         }
         catch (Exception e)
         {

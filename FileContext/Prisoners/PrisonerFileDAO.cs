@@ -53,4 +53,9 @@ public class PrisonerFileDAO : IPrisonerService
     {
         return _prisonerFileContext.Prisoners.ToList();
     }
+
+    public Task<Prisoner> GetPrisonerBySSNAsync(string ssn)
+    {
+        throw new NotImplementedException();
+    }
 }

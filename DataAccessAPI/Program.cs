@@ -26,8 +26,10 @@ builder.Services.AddScoped<ISectorService, SectorDAO>();
 builder.Services.AddScoped<IAlertService, AlertFileDAO>();
 builder.Services.AddScoped<INoteService, NoteDAO>();
 builder.Services.AddScoped<AlertFileContext>();
+
 builder.Services.AddDbContext<PrisonSystemContext>();
 
+//For File Storage 
 /*
 builder.Services.AddScoped<IUserService, UserDAO>();
 builder.Services.AddScoped<UserFileContext>();

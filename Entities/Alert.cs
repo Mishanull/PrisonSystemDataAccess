@@ -1,16 +1,15 @@
-﻿namespace Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace Entities;
 
 public class Alert
 {
     public DateTime DateTime { get; set; }
     public String Text { get; set; }
 
-    public PriorityE Priority { get; set; }
-
-    public enum PriorityE
-    {
-        Low,
-        Medium,
-        High
-    }
+    
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public Priority Priority { get; set; }
+    public int DurationInMinutes { get; set; }
+   
 }

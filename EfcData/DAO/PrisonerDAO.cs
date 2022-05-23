@@ -80,4 +80,12 @@ public class PrisonerDAO : IPrisonerService
             .Include(p=>p.Notes)
             .ToList();
     }
+
+    public async Task<Prisoner> GetPrisonerBySSNAsync(string ssn)
+    {
+        Prisoner prisoner = _prisonSystemContext.Prisoners
+            .Include(p => p.Sector)
+            .First(p => ssn.Equals(p.Ssn.ToString()));
+        return prisoner;
+    }
 }

@@ -17,4 +17,9 @@ public class AlertFileDAO : IAlertService
         _alertFileContext.Alerts!.Add(alert);
         await _alertFileContext.SaveChangesAsync();
     }
+
+    public async Task<ICollection<Alert>> getAlertsAsync()
+    {
+        return _alertFileContext.Alerts!;
+    }
 }
