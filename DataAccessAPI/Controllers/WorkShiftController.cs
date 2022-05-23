@@ -107,7 +107,7 @@ public class WorkShiftController : ControllerBase
     }
 
     [HttpPatch]
-    [Route("removeGuard/{guardId:int}/{shiftId:int}")]
+    [Route("removeGuard/{guardId:long}/{shiftId:long}")]
     public async Task<ActionResult<WorkShift>> RemoveGuardFromWorkShift([FromRoute] long guardId, [FromRoute] long shiftId)
     {
         try
