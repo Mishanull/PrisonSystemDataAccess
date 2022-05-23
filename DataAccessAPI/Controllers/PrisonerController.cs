@@ -63,7 +63,7 @@ public class PrisonerController : ControllerBase
     
     
     [HttpGet]
-    public async Task<ActionResult<ICollection<Prisoner>> GetPrisoners([FromQuery]int pageNumber, [FromQuery]int pageSize)
+    public async Task<ActionResult<ICollection<Prisoner>>> GetPrisoners([FromQuery]int pageNumber, [FromQuery]int pageSize)
     {
         try
         {
