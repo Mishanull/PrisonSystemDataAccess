@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using System.Text.Json;
+using Entities;
 using Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -84,6 +85,20 @@ public class PrisonerController : ControllerBase
         {
             Prisoner toGet = await _prisonerService.GetPrisonerByIdAsync(id);
             Console.WriteLine(toGet.FirstName);
+            return Ok(toGet);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    [HttpGet]
+    [Route("ssn/{ssn}")]
+    public async Task<ActionResult<String>> GetPrisonerBySSN([FromRoute]string ssn)
+    {
+        try
+        {
+            Prisoner toGet = await _prisonerService.GetPrisonerBySSNAsync(ssn);
             return Ok(toGet);
         }
         catch (Exception e)

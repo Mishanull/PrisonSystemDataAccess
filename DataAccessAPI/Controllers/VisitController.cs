@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using System.Text.Json;
+using Entities;
 using Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,11 +32,12 @@ public class VisitController : ControllerBase
     
     [HttpGet]
     [Route("{accessCode}")]
-    public async Task<ActionResult<ICollection<Visit>>> GetVisitByAccessCode([FromRoute] string accessCode)
+    public async Task<ActionResult<Visit>> GetVisitByAccessCode([FromRoute] string accessCode)
     {
         try
         {
             Visit visit = await _visitService.GetVisitByAccessCodeAsync(accessCode);
+            String response=JsonSerializer.Serialize(visit);
             return Ok(visit);
         }
         catch (Exception e)

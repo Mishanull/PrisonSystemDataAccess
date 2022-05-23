@@ -31,7 +31,20 @@ public class VisitDAO : IVisitService
 
     public async Task<Visit> GetVisitByAccessCodeAsync(string accessCode)
     {
-        return _context.Visits.First(v => v.AccessCode!.Equals(accessCode));
+        try
+        {
+            Visit v = _context.Visits.First(v => v.AccessCode!.Equals(accessCode));
+            return v;
+        }
+        catch (InvalidOperationException)
+        {
+            return new Visit
+            {
+                AccessCode = "invalid"
+            };
+        }
+
+        
     }
 
     public async Task<Visit> UpdateVisitStatusAsync(long id,Status status,String code)
