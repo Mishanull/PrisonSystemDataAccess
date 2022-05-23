@@ -62,12 +62,35 @@ public class PrisonerController : ControllerBase
     }
     
     
+    // [HttpGet]
+    // public async Task<ActionResult<PrisonersList>> GetPrisoners()
+    // {
+    //     try
+    //     {
+    //         ICollection<Prisoner> prisoners = await _prisonerService.GetPrisonersAsync();
+    //         PrisonersList prisonersList = new(prisoners);
+    //         return Ok(prisonersList);
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         return StatusCode(500, e.Message);
+    //     }
+    // }
+    //get prisoners with pagination
     [HttpGet]
-    public async Task<ActionResult<PrisonersList>> GetPrisoners()
+    public async Task<ActionResult<PrisonersList>> GetPrisoners([FromQuery]int pageNumber, [FromQuery]int pageSize)
     {
         try
         {
-            ICollection<Prisoner> prisoners = await _prisonerService.GetPrisoners();
+            ICollection<Prisoner> prisoners;
+            if (pageNumber==0 && pageSize==0)
+            {
+                prisoners = await _prisonerService.GetPrisonersAsync();
+            }
+            else
+            {
+                prisoners = await _prisonerService.GetPrisonersAsync(pageNumber, pageSize);
+            }
             PrisonersList prisonersList = new(prisoners);
             return Ok(prisonersList);
         }
@@ -98,7 +121,7 @@ public class PrisonerController : ControllerBase
     {
         try
         {
-            Prisoner toGet = await _prisonerService.GetPrisonerBySSNAsync(ssn);
+            Prisoner toGet = await _prisonerService.GetPrisonerBySsnAsync(ssn);
             return Ok(toGet);
         }
         catch (Exception e)

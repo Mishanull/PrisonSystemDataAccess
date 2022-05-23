@@ -49,12 +49,17 @@ public class PrisonerFileDAO : IPrisonerService
         return foundedPrisoner;
     }
 
-    public async Task<ICollection<Prisoner>> GetPrisoners()
+    public async Task<ICollection<Prisoner>> GetPrisonersAsync()
     {
         return _prisonerFileContext.Prisoners.ToList();
     }
 
-    public Task<Prisoner> GetPrisonerBySSNAsync(string ssn)
+    public Task<ICollection<Prisoner>> GetPrisonersAsync(int pageNumber, int pageSize)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Prisoner> GetPrisonerBySsnAsync(string ssn)
     {
         throw new NotImplementedException();
     }
