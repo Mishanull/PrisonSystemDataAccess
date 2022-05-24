@@ -79,7 +79,7 @@ public class PrisonerDAO : IPrisonerService
             .Include(p=>p.Sector)
             .Include(p=>p.Notes)
             .ToList();
-        Console.WriteLine(p);
+        
         return p;
     }
 
