@@ -6,7 +6,7 @@ public class Visit
 {
     public long Id { get; set; }
     [Column("VisitDate")]
-    public DateTime? VisitDate { get; set; }
+    public DateTime VisitDate { get; set; }
     public Status? Status { get; set; }
     public string? AccessCode { get; set; }
     public string  FirstName { get; set; }

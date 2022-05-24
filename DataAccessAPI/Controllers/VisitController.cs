@@ -51,6 +51,7 @@ public class VisitController : ControllerBase
     {
         try
         {
+           
             Visit created = await _visitService.CreateVisitAsync(visit);
             return Ok(created);
             // return Created($"/Visit/{created.Id}", created);

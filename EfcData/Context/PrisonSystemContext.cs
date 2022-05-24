@@ -24,11 +24,15 @@ public class PrisonSystemContext: DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().HasKey(user => user.Id);
+        modelBuilder.Entity<Prisoner>().Property(p => p.EntryDate).HasConversion(v => v,
+            v => new DateTime(v.Ticks, DateTimeKind.Utc));
+        modelBuilder.Entity<Prisoner>().Property(p => p.ReleaseDate).HasConversion(v => v,
+            v => new DateTime(v.Ticks, DateTimeKind.Utc));
         modelBuilder.Entity<Prisoner>().HasKey(prisoner => prisoner.Id);
         modelBuilder.Entity<WorkShift>().HasKey(shift => shift.Id);
         modelBuilder.Entity<Sector>().HasKey(sector => sector.Id);
         modelBuilder.Entity<Visit>().Property(e => e.VisitDate).HasConversion(v => v,
-            v => new DateTime(v!.Value.Ticks, DateTimeKind.Utc));
+            v => new DateTime(v!.Ticks, DateTimeKind.Utc));
         modelBuilder.Entity<Visit>().HasKey(visit => visit.Id);
         modelBuilder.Entity<Note>().HasKey(note => note.Id);
     }
