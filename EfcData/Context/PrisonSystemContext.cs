@@ -1,4 +1,5 @@
 using Entities;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace EfcData.Context;
@@ -14,8 +15,10 @@ public class PrisonSystemContext: DbContext
     public DbSet<Note> Notes { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    { 
-        optionsBuilder.UseSqlite(@"DataSource=C:\Users\Emmi\Skrivebord\OneDrive - ViaUC\Via College University - S3\SEP3\PrisonSystemDataAccess\EfcData\PrisonSystem.db");
+    {
+      
+    
+        optionsBuilder.UseSqlite(@"Data Source=C:\Programming\SEP3\PrisonSystemDataAccess\EfcData\PrisonSystem.db");
     } 
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)

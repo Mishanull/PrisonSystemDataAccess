@@ -91,4 +91,18 @@ public class GuardController : ControllerBase
         }
     }
 
+    [HttpGet]
+    [Route("{id:long}/Sector")]
+    public async Task<ActionResult<String>> GetGuardBySector([FromRoute] long id)
+    {
+        try
+        {
+            Sector sector = await _guardService.GetGuardBySector(id);
+            return Ok(sector);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 }

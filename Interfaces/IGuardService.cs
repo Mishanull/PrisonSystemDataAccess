@@ -9,4 +9,5 @@ public interface IGuardService
     public Task RemoveGuardAsync(long id);
     public Task<Guard> UpdateGuardAsync(Guard? guard);
     Task<ICollection<Guard>> GetGuards();
+    Task<Sector> GetGuardBySector(long id);
 }

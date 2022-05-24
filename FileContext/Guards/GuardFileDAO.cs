@@ -55,4 +55,9 @@ public class GuardFileDAO : IGuardService
     {
         return _guardFileContext.Guards.ToList();
     }
+
+    public Task<Sector> GetGuardBySector(long id)
+    {
+        throw new NotImplementedException();
+    }
 }
