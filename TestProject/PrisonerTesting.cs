@@ -9,44 +9,45 @@ public class PrisonerTesting
 {
     private IPrisonerService _prisonerService = null!;
     private ISectorService _sectorService = null!;
-    [SetUp]
+    [OneTimeSetUp]
     public void Setup()
     {
         _prisonerService = new PrisonerDAO(new PrisonSystemContext());
         _sectorService = new SectorDAO(new PrisonSystemContext());
     }
+    
 
-    
-    
     [Test]
-    [OneTimeSetUp]
-    public async Task CreatePrisoner()
-    {
-        var p = NewPrisoner();
-    }
     [Category("efc-prisoner_tests")]
     public async Task PrisonerFetchedByIdHasThatId_test()
     {
         long id;
+        var inTestCreation = false;
         try
-        {
+        { 
             id = (await _prisonerService.GetPrisonersAsync(1, 1)).First().Id;
         }
         catch (Exception)
         {
             await _prisonerService.CreatePrisonerAsync(await NewPrisoner());
             id = (await _prisonerService.GetPrisonersAsync(1, 1)).First().Id;
+            inTestCreation = true;
         }
         
         Prisoner p = await _prisonerService.GetPrisonerByIdAsync(id);
         // Assert.AreEqual(p.Id, id);
         Assert.That(id, Is.EqualTo(p.Id));
+
+        if (inTestCreation)
+        {
+            await _prisonerService.RemovePrisonerAsync(id);
+        }
     }
 
     
     private async Task<Prisoner> NewPrisoner()
     {
-        var p = new Prisoner
+        return new Prisoner
         {
             FirstName = "Firstname",
             LastName = "Lastname",
@@ -57,7 +58,6 @@ public class PrisonerTesting
             ReleaseDate = DateTime.Now,
             Notes = new List<Note>()
         };
-        return p;
     }
 
     [Test]
@@ -67,5 +67,6 @@ public class PrisonerTesting
         Prisoner p = await NewPrisoner();
         p = await _prisonerService.CreatePrisonerAsync(p);
         Assert.IsNotNull(p);
+        await _prisonerService.RemovePrisonerAsync(p.Id);
     }
 }
