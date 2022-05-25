@@ -17,4 +17,9 @@ public class SectorDAO :ISectorService
     {
         return _context.Sectors.ToList();
     }
+    
+    public async Task<Sector> GetSectorByIdAsync(long id)
+    {
+        return _context.Sectors.First(s=> s.Id==id);
+    }
 }
