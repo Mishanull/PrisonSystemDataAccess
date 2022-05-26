@@ -113,4 +113,34 @@ public class PrisonerController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+
+    [HttpGet]
+    [Route("count")]
+    public async Task<ActionResult<String>> GetPrisonersCount()
+    {
+        try
+        {
+            return Ok(_prisonerService.GetPrisonerCount());
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpGet]
+    [Route("sector")]
+    public async Task<ActionResult<ICollection<Prisoner>>> GetPrisonersBySector([FromQuery]int pageNumber,[FromQuery]int pageSize,[FromQuery]int sectorId)
+    {
+        try
+        {
+            ICollection<Prisoner> prisoners =
+                await _prisonerService.GetPrisonersBySectorAsync(pageNumber, pageSize, sectorId);
+            return Ok(prisoners);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 }
