@@ -18,7 +18,7 @@ public class PrisonSystemContext: DbContext
     {
       
     
-        optionsBuilder.UseSqlite(@"Data Source=C:\Users\asus\Desktop\Prison_System\PrisonSystemDataAccess\EfcData\PrisonSystem.db");
+        optionsBuilder.UseSqlite(@"Data Source=C:\Users\Emmi\Skrivebord\OneDrive - ViaUC\Via College University - S3\SEP3\PrisonSystemDataAccess\EfcData\PrisonSystem.db");
     } 
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,6 +29,7 @@ public class PrisonSystemContext: DbContext
         modelBuilder.Entity<Prisoner>().Property(p => p.ReleaseDate).HasConversion(v => v,
             v => new DateTime(v.Ticks, DateTimeKind.Utc));
         modelBuilder.Entity<Prisoner>().HasKey(prisoner => prisoner.Id);
+        modelBuilder.Entity<Prisoner>().HasIndex(p=>p.Ssn).IsUnique();
         modelBuilder.Entity<WorkShift>().HasKey(shift => shift.Id);
         modelBuilder.Entity<Sector>().HasKey(sector => sector.Id);
         modelBuilder.Entity<Visit>().Property(e => e.VisitDate).HasConversion(v => v,

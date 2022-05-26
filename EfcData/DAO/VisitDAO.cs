@@ -53,4 +53,30 @@ public class VisitDAO : IVisitService
     {
         return _context.Visits.Skip((pageNumber-1)*pageSize).Take(pageSize).ToList();
     }
+    
+    // List of 2 int, with visits pending today and visits pending to approve.
+    public async Task<List<int>> GetNumVisitsTodayAsync()
+    {
+        ICollection<Visit> visits = _context.Visits.ToList();;
+        int visitToApprove = 0, visitToday = 0;
+        foreach (var visit in visits)
+        {
+            Console.WriteLine(visit.Status!.Value);
+            switch (visit.Status)
+            {
+                case Status.Waiting:
+                    visitToApprove++;
+                    break;
+                case Status.Approved when visit.VisitDate.DayOfWeek.Equals(DateTime.Now.DayOfWeek) && visit.VisitDate > DateTime.Now:
+                    visitToday++;
+                    break;
+            }
+        }
+        var numVisitsToday = new List<int>
+        {
+            visitToApprove,
+            visitToday
+        };
+        return numVisitsToday;
+    }
 }

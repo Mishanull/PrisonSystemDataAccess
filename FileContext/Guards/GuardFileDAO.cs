@@ -60,4 +60,19 @@ public class GuardFileDAO : IGuardService
     {
         throw new NotImplementedException();
     }
+
+    public Task<ICollection<Guard>> GetGuardsPerSectTodayAsync(long sectorId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<int>> GetNumGuardsPerSectAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<int>> GetNumGuardsPerSectTodayAsync()
+    {
+        throw new NotImplementedException();
+    }
 }

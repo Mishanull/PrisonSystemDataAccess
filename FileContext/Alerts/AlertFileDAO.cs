@@ -27,4 +27,16 @@ public class AlertFileDAO : IAlertService
     {
         return _alertFileContext.Alerts!.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
     }
+    
+    // Number of alerts the last 24hs.
+    public async Task<List<int>> GetAlertsTodayAsync()
+    {
+        ICollection<Alert> alerts = await getAlertsAsync();
+        int alerts24Hs = alerts.Count(alert => alert.DateTime > DateTime.Now - TimeSpan.FromHours(24));
+        var numAlertsToday = new List<int>
+        {
+            alerts24Hs
+        };
+        return numAlertsToday;
+    }
 }

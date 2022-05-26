@@ -5,5 +5,5 @@ namespace DAOInterfaces;
 
 public interface IUserService
 {
-    public Task<User> GetUserAsync(string username);
+    Task<User> GetUserAsync(string username);
 }

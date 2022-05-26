@@ -16,6 +16,7 @@ public class PrisonerDAO : IPrisonerService
     
     public async Task<Prisoner> CreatePrisonerAsync(Prisoner prisoner)
     {
+        if (prisoner.Sector!.FreeCells == 0) throw new Exception($"Error: Sector {prisoner.Sector.Id} is full");
         long largestId = -1;
         if (_prisonSystemContext.Prisoners.Any())
         {
@@ -24,12 +25,10 @@ public class PrisonerDAO : IPrisonerService
 
         prisoner.Id = ++largestId;
         
-        //TODO ...incrementing does not work ???
-        prisoner.Sector.OccupiedCells++;
-        _prisonSystemContext.Sectors.Update(prisoner.Sector);
         if (prisoner.Sector != null) _prisonSystemContext.Sectors.Attach(prisoner.Sector);
         _prisonSystemContext.Prisoners.Add(prisoner);
-
+        prisoner.Sector!.OccupiedCells++;
+        _prisonSystemContext.Sectors.Update(prisoner.Sector);
         await _prisonSystemContext.SaveChangesAsync();
         return prisoner;
     }
@@ -37,7 +36,7 @@ public class PrisonerDAO : IPrisonerService
     public async Task RemovePrisonerAsync(long id)
     {
         Prisoner p = await GetPrisonerByIdAsync(id);
-        p.Sector.OccupiedCells--;
+        p.Sector!.OccupiedCells--;
         _prisonSystemContext.Sectors.Update(p.Sector);
         
         if (p.Notes != null)
@@ -98,5 +97,35 @@ public class PrisonerDAO : IPrisonerService
             .Include(p => p.Sector)
             .First(p => ssn.Equals(p.Ssn.ToString()));
         return prisoner;
+    }
+    
+    // List of 3 int, with the amount of prisoners per sector. [sect1, sect2, sect3]
+    public async Task<List<int>> GetNumPrisPerSectAsync()
+    {
+        ICollection<Prisoner> prisoners = await GetPrisonersAsync();
+        
+        int sect1 = 0, sect2 = 0, sect3 = 0;
+            foreach (var prisoner in prisoners)
+            {
+                switch (prisoner.Sector!.Id)
+                {
+                    case 1:
+                        sect1++;
+                        break;
+                    case 2:
+                        sect2++;
+                        break;
+                    case 3:
+                        sect3++;
+                        break;
+                }
+            }
+        var numPrisPerSect = new List<int>
+        {
+            sect1,
+            sect2,
+            sect3
+        };
+        return numPrisPerSect;
     }
 }

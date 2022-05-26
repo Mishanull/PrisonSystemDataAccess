@@ -63,4 +63,9 @@ public class PrisonerFileDAO : IPrisonerService
     {
         throw new NotImplementedException();
     }
+
+    public Task<List<int>> GetNumPrisPerSectAsync()
+    {
+        throw new NotImplementedException();
+    }
 }
