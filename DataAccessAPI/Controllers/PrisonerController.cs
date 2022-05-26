@@ -143,4 +143,36 @@ public class PrisonerController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpGet]
+    [Route("numPerSect")]
+    public async Task<ActionResult<List<int>>> GetNumPrisPerSect()
+    {
+        try
+        {
+            var numPrisPerSect = await _prisonerService.GetNumPrisPerSectAsync();
+            return Ok(numPrisPerSect);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpPatch]
+    [Route("addPoints")]
+    public async Task<ActionResult<Prisoner>> UpdatePrisoner([FromBody] String[] request)
+    {
+        try
+        {
+            long.TryParse(request[0], out var id);
+            int.TryParse(request[1], out var points);
+            await _prisonerService.AddPointsToPrisoner(id,points);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 }

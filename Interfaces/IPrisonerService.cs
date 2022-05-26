@@ -14,4 +14,5 @@ public interface IPrisonerService
     public int? GetPrisonerCount();
     Task<ICollection<Prisoner>> GetPrisonersBySectorAsync(int pageNumber, int pageSize, int sectorId);
     Task<List<int>> GetNumPrisPerSectAsync();
+    Task AddPointsToPrisoner(long id, int points);
 }

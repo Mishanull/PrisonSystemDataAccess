@@ -78,4 +78,9 @@ public class PrisonerFileDAO : IPrisonerService
     {
         throw new NotImplementedException();
     }
+
+    public Task AddPointsToPrisoner(long id, int point)
+    {
+        throw new NotImplementedException();
+    }
 }

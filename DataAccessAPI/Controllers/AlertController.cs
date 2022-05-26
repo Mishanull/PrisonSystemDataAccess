@@ -47,4 +47,19 @@ public class AlertController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpGet]
+    [Route("alertsToday")]
+    public async Task<ActionResult<List<int>>> GetAlertsToday()
+    {
+        try
+        {
+            var numAlertsToday = await _alertService.GetAlertsTodayAsync();
+            return Ok(numAlertsToday);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 }

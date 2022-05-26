@@ -120,4 +120,19 @@ public class WorkShiftController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpGet]
+    [Route("workShiftByGuard{guardId:long}")]
+    public async Task<ActionResult<WorkShift>> GetWorkShiftByGuardIdA(long guardId)
+    {
+        try
+        {
+            WorkShift workShift = await _workShiftService.GetWorkShiftByGuardIdAsync(guardId);
+            return Ok(workShift);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 }

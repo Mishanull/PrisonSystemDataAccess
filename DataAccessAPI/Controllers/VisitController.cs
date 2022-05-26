@@ -82,4 +82,19 @@ public class VisitController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpGet]
+    [Route("visitsToday")]
+    public async Task<ActionResult<List<int>>> GetVisitsToday()
+    {
+        try
+        {
+            var numVisitsToday = await _visitService.GetNumVisitsTodayAsync();
+            return Ok(numVisitsToday);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 }

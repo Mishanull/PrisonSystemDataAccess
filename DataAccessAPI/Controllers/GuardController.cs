@@ -105,4 +105,49 @@ public class GuardController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    [HttpGet]
+    [Route("guardsSectorToday{sectorId:long}")]
+    public async Task<ActionResult<ICollection<Guard>>> GetGuardsPerSectToday(long sectorId)
+    {
+        try
+        { 
+            var guardsSector = await _guardService.GetGuardsPerSectTodayAsync(sectorId);
+            return Ok(guardsSector);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    [HttpGet]
+    [Route("numPerSector")]
+    public async Task<ActionResult<List<int>>> GetNumGuardsPerSect()
+    {
+        try
+        {
+            var numGuardPerSect = await _guardService.GetNumGuardsPerSectAsync();
+            return Ok(numGuardPerSect);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpGet]
+    [Route("numPerSectorToday")]
+    public async Task<ActionResult<List<int>>> GetNumGuardsPerSectToday()
+    {
+        try
+        {
+            var numGuardPerSectToday = await _guardService.GetNumGuardsPerSectTodayAsync();
+            return Ok(numGuardPerSectToday);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 }

@@ -142,4 +142,15 @@ public class PrisonerDAO : IPrisonerService
         };
         return numPrisPerSect;
     }
+
+    public async Task AddPointsToPrisoner(long id, int point)
+    {
+        Prisoner prisoner = await GetPrisonerByIdAsync(id);
+        if (prisoner.Points + point > 12 || prisoner.Points + point < 0)
+            throw new Exception($"Error: Points can not be removed/added to prisoner {prisoner.Id}");
+        prisoner.Points += point;
+        
+        _prisonSystemContext.Prisoners.Update(prisoner);
+        await _prisonSystemContext.SaveChangesAsync();
+    }
 }

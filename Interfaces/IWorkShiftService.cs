@@ -10,5 +10,6 @@ public interface IWorkShiftService
     Task<WorkShift> AddGuardToWorkShiftAsync(long guardId, long shiftId);
     Task RemoveWorkShiftAsync(long id);
     Task<WorkShift> UpdateWorkShiftAsync(WorkShift shift);
-    Task RemoveGuardFromWorkShiftAsync(long guardId, long shiftId);  
+    Task RemoveGuardFromWorkShiftAsync(long guardId, long shiftId);
+    Task<WorkShift> GetWorkShiftByGuardIdAsync(long guardId);
 }

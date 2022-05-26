@@ -98,6 +98,20 @@ public class WorkShiftDAO : IWorkShiftService
         if (guardToRemove != null) shiftToUpdate.Guards?.Remove(guardToRemove);
         await _prisonSystemContext.SaveChangesAsync();
     }
-    
-    
+
+    public async Task<WorkShift> GetWorkShiftByGuardIdAsync(long guardId)
+    {
+        Guard? guard = await _prisonSystemContext.Guards.FindAsync(guardId);
+        ICollection<WorkShift> workShifts = await GetWorkShiftsAsync();
+        WorkShift guardWorkShift = new WorkShift();
+        foreach (var workShift in workShifts)
+        {
+            if (workShift.Guards != null && workShift.Guards.Contains(guard!))
+            {
+                guardWorkShift = workShift;
+                break;
+            }
+        }
+        return guardWorkShift;
+    }
 }
