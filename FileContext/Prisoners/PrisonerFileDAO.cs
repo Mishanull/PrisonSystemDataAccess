@@ -64,6 +64,16 @@ public class PrisonerFileDAO : IPrisonerService
         throw new NotImplementedException();
     }
 
+    public int? GetPrisonerCount()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ICollection<Prisoner>> GetPrisonersBySectorAsync(int pageNumber, int pageSize, int sectorId)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<List<int>> GetNumPrisPerSectAsync()
     {
         throw new NotImplementedException();
