@@ -99,12 +99,12 @@ public class PrisonerDAO : IPrisonerService
         return prisoner;
     }
 
-    public int? GetPrisonerCount()
+    public int GetPrisonerCount()
     {
         return _prisonSystemContext.Prisoners.Count();
     }
 
-    public async Task<ICollection<Prisoner>> GetPrisonersBySectorAsync(int pageNumber, int pageSize, int sectorId)
+    public async Task<ICollection<Prisoner>> GetPrisonersBySectorAsync(int pageNumber, int pageSize, long sectorId)
     {
         return _prisonSystemContext.Prisoners.Where(p=>p.Sector!.Id==sectorId)
             .Skip((pageNumber - 1) * pageSize)

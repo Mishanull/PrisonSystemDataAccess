@@ -16,9 +16,7 @@ public class PrisonSystemContext: DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      
-    
-        optionsBuilder.UseSqlite(@"Data Source=C:\Users\Emmi\Skrivebord\OneDrive - ViaUC\Via College University - S3\SEP3\PrisonSystemDataAccess\EfcData\PrisonSystem.db");
+        optionsBuilder.UseSqlite(@"Data Source=C:\Users\asus\Desktop\Prison_System\PrisonSystemDataAccess\EfcData\PrisonSystem.db");
     } 
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)

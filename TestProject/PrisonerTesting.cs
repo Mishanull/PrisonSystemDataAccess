@@ -67,6 +67,69 @@ public class PrisonerTesting
         Prisoner p = await NewPrisoner();
         p = await _prisonerService.CreatePrisonerAsync(p);
         Assert.IsNotNull(p);
+        
         await _prisonerService.RemovePrisonerAsync(p.Id);
+    }
+    
+    [Test]
+    [Category("efc-prisoner_tests")]
+    public async Task UpdatePrisoner_test()
+    {
+        Prisoner p;
+        bool wasAdded = false;
+        try
+        {
+            p = (await _prisonerService.GetPrisonersAsync(1, 1)).First();
+        }
+        catch (Exception)
+        {
+            p = await NewPrisoner();
+            await _prisonerService.CreatePrisonerAsync(p);
+            wasAdded = true;
+        }
+
+        string originalName = p.FirstName;
+        p.FirstName = "updatedFirstname";
+        Prisoner p2 = await _prisonerService.UpdatePrisonerAsync(p);
+
+        Assert.True(p.Id==p2.Id && p.FirstName.Equals(p2.FirstName));
+        
+        if (wasAdded)
+        {
+            await _prisonerService.RemovePrisonerAsync(p.Id);
+        }
+        else
+        {
+            p.FirstName = originalName;
+            await _prisonerService.UpdatePrisonerAsync(p);
+        }
+    }
+    
+    [Test]
+    [Category("efc-prisoner_tests")]
+    public async Task NumberOfPrisoners_test()
+    {
+        var prisoners = await _prisonerService.GetPrisonersAsync();
+        int numOfAllPrisoners = _prisonerService.GetPrisonerCount();
+
+        Assert.That(prisoners.Count == numOfAllPrisoners);
+    }
+    
+    [Test]
+    [Category("efc-prisoner_tests")]
+    public async Task NumberOfPrisonersPerSector_test()
+    {
+        var prisoners = await _prisonerService.GetPrisonersAsync();
+        var sectors = await _sectorService.GetSectorsAsync();
+        
+        var numOfPrisonersPerSector = await _prisonerService.GetNumPrisPerSectAsync();
+
+        int i = 0;
+        foreach (var sector in sectors)
+        {
+            var prisonersPerSector = await _prisonerService.GetPrisonersBySectorAsync(1,prisoners.Count, sector.Id);
+
+            Assert.That(prisonersPerSector.Count == numOfPrisonersPerSector[i++]);
+        }
     }
 }
