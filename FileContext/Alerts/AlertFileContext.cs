@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using Entities;
 
 namespace FileContext.Alerts;
@@ -9,6 +10,7 @@ public class AlertFileContext
 
     private ICollection<Alert>? _alerts;
 
+    [SuppressMessage("ReSharper.DPA", "DPA0001: Memory allocation issues")]
     public ICollection<Alert>? Alerts
     {
         get
@@ -38,12 +40,14 @@ public class AlertFileContext
             new Alert {
                 DateTime = DateTime.Now,
                 Priority = Priority.Medium,
-                Text = "alert test -seed"
+                Text = "alert test -seed",
+                Sectors = new []{true, true, true}
             }
         };
         _alerts = a.ToList();
         Task.FromResult(SaveChangesAsync());
     }
+    [SuppressMessage("ReSharper.DPA", "DPA0003: Excessive memory allocations in LOH")]
     public async Task SaveChangesAsync()
     {
         string serialize = JsonSerializer.Serialize(Alerts, new JsonSerializerOptions {
@@ -53,6 +57,8 @@ public class AlertFileContext
         await File.WriteAllTextAsync(AlertFilePath,serialize);
         _alerts = null;
     }
+    [SuppressMessage("ReSharper.DPA", "DPA0003: Excessive memory allocations in LOH")]
+    [SuppressMessage("ReSharper.DPA", "DPA0002: Excessive memory allocations in SOH", MessageId = "type: System.Char[]")]
     private void LoadData()
     {
         string content = File.ReadAllText(AlertFilePath);

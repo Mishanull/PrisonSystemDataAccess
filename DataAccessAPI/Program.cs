@@ -3,9 +3,7 @@ using EfcData.Context;
 using EfcData.DAO;
 using Entities;
 using FileContext.Alerts;
-using FileContext.Guards;
-using FileContext.Prisoners;
-using FileContext.Users;
+
 using Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,15 +27,6 @@ builder.Services.AddScoped<AlertFileContext>();
 
 builder.Services.AddDbContext<PrisonSystemContext>();
 
-//For File Storage 
-/*
-builder.Services.AddScoped<IUserService, UserDAO>();
-builder.Services.AddScoped<UserFileContext>();
-builder.Services.AddScoped<IGuardService, GuardDAO>();
-builder.Services.AddScoped< GuardFileContext>();
-builder.Services.AddScoped<IPrisonerService, PrisonerDAO>();
-builder.Services.AddScoped<PrisonerFileContext>();
-*/
 
 
 var app = builder.Build();
