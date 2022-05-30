@@ -1,5 +1,6 @@
 ﻿using EfcData.Context;
 using Entities;
+using Entities.Enums;
 using Interfaces;
 
 namespace EfcData.DAO;

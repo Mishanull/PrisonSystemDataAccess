@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Entities.Enums;
 
 namespace Interfaces;
 

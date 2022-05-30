@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Entities.Enums;
 
 namespace Entities;
 

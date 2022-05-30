@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Entities;
+﻿namespace Entities.Enums;
 
 public enum Status
 {

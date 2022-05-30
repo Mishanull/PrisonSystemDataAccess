@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Entities;
+using Entities.Enums;
 using Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
