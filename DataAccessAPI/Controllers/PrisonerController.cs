@@ -175,4 +175,19 @@ public class PrisonerController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    [HttpGet]
+    [Route("lowBehaviour")]
+    public async Task<ActionResult<ICollection<Prisoner>>> GetPrisoners()
+    {
+        try
+        {
+            
+                ICollection<Prisoner> prisoners = await _prisonerService.GetPrisonersWithLowBehaviourAsync();
+                return Ok(prisoners);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 }

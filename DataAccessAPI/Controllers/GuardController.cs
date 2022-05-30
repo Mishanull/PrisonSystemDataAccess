@@ -106,7 +106,7 @@ public class GuardController : ControllerBase
         }
     }
     [HttpGet]
-    [Route("guardsSectorToday{sectorId:long}")]
+    [Route("guardsSectorToday/{sectorId:long}")]
     public async Task<ActionResult<ICollection<Guard>>> GetGuardsPerSectToday(long sectorId)
     {
         try
@@ -144,6 +144,34 @@ public class GuardController : ControllerBase
         {
             var numGuardPerSectToday = await _guardService.GetNumGuardsPerSectTodayAsync();
             return Ok(numGuardPerSectToday);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    [HttpGet]
+    [Route("assigned/{id:long}")]
+    public async Task<ActionResult<bool>> IsGuardAssigned([FromRoute] long id)
+    {
+        try
+        {
+            bool assigned = await _guardService.IsAssigned(id);
+            return Ok(assigned);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    [HttpGet]
+    [Route("working/{id:long}")]
+    public async Task<ActionResult<bool>> IsGuardWorking([FromRoute] long id)
+    {
+        try
+        {
+            bool working = await _guardService.IsWorking(id);
+            return Ok(working);
         }
         catch (Exception e)
         {

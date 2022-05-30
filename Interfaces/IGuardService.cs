@@ -13,4 +13,7 @@ public interface IGuardService
     Task<ICollection<Guard>> GetGuardsPerSectTodayAsync(long sectorId);
     Task<List<int>> GetNumGuardsPerSectAsync();
     Task<List<int>> GetNumGuardsPerSectTodayAsync();
+
+    Task<bool> IsAssigned(long id);
+    Task<bool> IsWorking(long id);
 }

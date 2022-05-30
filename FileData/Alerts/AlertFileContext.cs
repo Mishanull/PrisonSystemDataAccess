@@ -2,7 +2,7 @@
 using System.Text.Json;
 using Entities;
 
-namespace FileContext.Alerts;
+namespace FileData.Alerts;
 
 public class AlertFileContext
 {
@@ -39,7 +39,6 @@ public class AlertFileContext
         Alert[] a = {
             new Alert {
                 DateTime = DateTime.Now,
-                Priority = Priority.Medium,
                 Text = "alert test -seed",
                 Sectors = new []{true, true, true}
             }

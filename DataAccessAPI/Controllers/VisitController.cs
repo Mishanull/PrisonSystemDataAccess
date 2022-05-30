@@ -85,12 +85,26 @@ public class VisitController : ControllerBase
     
     [HttpGet]
     [Route("visitsToday")]
-    public async Task<ActionResult<List<int>>> GetVisitsToday()
+    public async Task<ActionResult<ICollection<Visit>>> GetVisitsToday()
     {
         try
         {
-            var numVisitsToday = await _visitService.GetNumVisitsTodayAsync();
+            var numVisitsToday = await _visitService.GetVisitsTodayAsync();
             return Ok(numVisitsToday);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    [HttpGet]
+    [Route("visitsPending")]
+    public async Task<ActionResult<ICollection<Visit>>> GetVisitsPending()
+    {
+        try
+        {
+            ICollection<Visit> numVisitsPending = await _visitService.GetVisitsPendingAsync();
+            return Ok(numVisitsPending);
         }
         catch (Exception e)
         {

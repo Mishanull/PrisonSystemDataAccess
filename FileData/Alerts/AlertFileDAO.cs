@@ -1,7 +1,7 @@
 ﻿using Entities;
 using Interfaces;
 
-namespace FileContext.Alerts;
+namespace FileData.Alerts;
 
 public class AlertFileDAO : IAlertService
 {
@@ -14,6 +14,7 @@ public class AlertFileDAO : IAlertService
 
     public async Task AddAlertAsync(Alert alert)
     {
+        alert.DurationInMinutes /= 60;
         _alertFileContext.Alerts!.Add(alert);
         await _alertFileContext.SaveChangesAsync();
     }
@@ -28,15 +29,10 @@ public class AlertFileDAO : IAlertService
         return _alertFileContext.Alerts!.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
     }
     
-    // Number of alerts the last 24hs.
-    public async Task<List<int>> GetAlertsTodayAsync()
+    public async Task<ICollection<Alert>> GetAlertsTodayAsync()
     {
-        ICollection<Alert> alerts = await getAlertsAsync();
-        int alerts24Hs = alerts.Count(alert => alert.DateTime > DateTime.Now - TimeSpan.FromHours(24));
-        var numAlertsToday = new List<int>
-        {
-            alerts24Hs
-        };
-        return numAlertsToday;
+        ICollection<Alert> alerts =  _alertFileContext.Alerts.Where(alert => alert.DateTime > DateTime.Now - TimeSpan.FromHours(24)).ToList() ;
+        
+        return alerts;
     }
 }

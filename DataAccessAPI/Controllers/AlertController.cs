@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Entities;
 using Interfaces;
@@ -21,6 +22,7 @@ public class AlertController : ControllerBase
 
     
     [HttpPost]
+    [SuppressMessage("ReSharper.DPA", "DPA0001: Memory allocation issues")]
     public async Task ArchiveAlert([FromBody] Alert alert)
     {
         try
@@ -50,12 +52,12 @@ public class AlertController : ControllerBase
     
     [HttpGet]
     [Route("alertsToday")]
-    public async Task<ActionResult<List<int>>> GetAlertsToday()
+    public async Task<ActionResult<ICollection<Alert>>> GetAlertsToday()
     {
         try
         {
-            var numAlertsToday = await _alertService.GetAlertsTodayAsync();
-            return Ok(numAlertsToday);
+            var alertsToday = await _alertService.GetAlertsTodayAsync();
+            return Ok(alertsToday);
         }
         catch (Exception e)
         {

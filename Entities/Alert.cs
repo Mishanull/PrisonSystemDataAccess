@@ -8,8 +8,6 @@ public class Alert
     public String Text { get; set; }
     public bool[] Sectors { get; set; } = new bool[3];
     
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public Priority Priority { get; set; }
     public int DurationInMinutes { get; set; }
    
 }

@@ -13,7 +13,7 @@ public class GuardDAO : IGuardService
     {
         _prisonSystemContext = prisonSystemContext;
     }
-    
+
     public async Task<Guard> CreateGuardAsync(Guard guard)
     {
         long largestId = -1;
@@ -64,26 +64,34 @@ public class GuardDAO : IGuardService
         Guard g = _prisonSystemContext.Guards.First(g => g.Id == id);
         WorkShift shift = _prisonSystemContext.WorkShifts.First(workShift => workShift!.Guards!.Contains(g));
         _prisonSystemContext.Entry(shift).Reference(w => w.Sector).Load();
-        
+
         return shift.Sector!;
     }
-    
+
     // List of guards working today in specific sector.
     public async Task<ICollection<Guard>> GetGuardsPerSectTodayAsync(long sectorId)
     {
-        ICollection<WorkShift> workShifts = await GetWorkShiftsAsync();
-        return workShifts.Where(workShift => 
-            workShift.Guards != null 
-            && workShift.Sector!.Id == sectorId 
-            && workShift.DaysOfWeek!.Contains(DateTime.Now.DayOfWeek.ToString()))
+        ICollection<WorkShift> workShifts = await _prisonSystemContext.WorkShifts
+            .Include(shift => shift.Guards)
+            .Include(sector => sector.Sector)
+            .ToListAsync();
+        ;
+        return workShifts.Where(workShift =>
+                workShift.Guards != null
+                && workShift.Sector!.Id == sectorId
+                && workShift.DaysOfWeek!.Contains(DateTime.Now.DayOfWeek.ToString()))
             .SelectMany(workShift => workShift.Guards!).ToList();
     }
-    
+
     // List of 3 int, with the amount of guards per sector and the total. [sect1, sect2, sect3, total]
     // ((sect1 + sect2 + sect3) - total) = guards without shift
     public async Task<List<int>> GetNumGuardsPerSectAsync()
     {
-        ICollection<WorkShift> workShifts = await GetWorkShiftsAsync();
+        ICollection<WorkShift> workShifts = await _prisonSystemContext.WorkShifts
+            .Include(shift => shift.Guards)
+            .Include(sector => sector.Sector)
+            .ToListAsync();
+        ;
         var numGuards = GetGuards().Result.Count;
         int sect1 = 0, sect2 = 0, sect3 = 0;
         foreach (var workShift in workShifts)
@@ -102,6 +110,7 @@ public class GuardDAO : IGuardService
                     break;
             }
         }
+
         var numGuardPerSect = new List<int>
         {
             sect1,
@@ -114,7 +123,10 @@ public class GuardDAO : IGuardService
 
     public async Task<List<int>> GetNumGuardsPerSectTodayAsync()
     {
-        ICollection<WorkShift> workShifts = await GetWorkShiftsAsync();
+        ICollection<WorkShift> workShifts = await _prisonSystemContext.WorkShifts
+            .Include(shift => shift.Guards)
+            .Include(sector => sector.Sector)
+            .ToListAsync();
         int sect1 = 0, sect2 = 0, sect3 = 0;
         foreach (var workShift in workShifts)
         {
@@ -135,22 +147,58 @@ public class GuardDAO : IGuardService
                 }
             }
         }
+
         var numGuardPerSectToday = new List<int>
-            {
-                sect1,
-                sect2,
-                sect3
-            };
+        {
+            sect1,
+            sect2,
+            sect3
+        };
         return numGuardPerSectToday;
     }
-    
-    private async Task<ICollection<WorkShift>> GetWorkShiftsAsync()
+
+    public async Task<bool> IsAssigned(long id)
     {
-        ICollection<WorkShift> shifts = await _prisonSystemContext.WorkShifts
+        ICollection<WorkShift> workShifts = await _prisonSystemContext.WorkShifts
             .Include(shift => shift.Guards)
             .Include(sector => sector.Sector)
             .ToListAsync();
-        Console.WriteLine(shifts);
-        return shifts;
+        bool result = false;
+        foreach (var workshift in workShifts)
+        {
+            if (workshift.Guards != null)
+            {
+                result = workshift!.Guards!.Any(g => g.Id == id);
+                if (result)
+                {
+                    return result;
+                }
+            }
+        }
+        return result;
+
+
+
+    }
+
+    public async Task<bool> IsWorking(long id)
+    {
+        ICollection<WorkShift> workShifts = await _prisonSystemContext.WorkShifts
+            .Include(shift => shift.Guards)
+            .Include(sector => sector.Sector)
+            .ToListAsync();
+        bool result = false;
+        foreach (var workshift in workShifts)
+        {
+            if (workshift.Guards != null && workshift.DaysOfWeek!.Contains(DateTime.Now.DayOfWeek.ToString()))
+            {
+                result = workshift!.Guards!.Any(g => g.Id == id);
+                if (result)
+                {
+                    return result;
+                }
+            }
+        }
+        return result;
     }
 }

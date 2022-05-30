@@ -153,4 +153,10 @@ public class PrisonerDAO : IPrisonerService
         _prisonSystemContext.Prisoners.Update(prisoner);
         await _prisonSystemContext.SaveChangesAsync();
     }
+
+    public async Task<ICollection<Prisoner>> GetPrisonersWithLowBehaviourAsync()
+    {
+        ICollection<Prisoner> prisoners=await _prisonSystemContext.Prisoners.Where(prisoner => prisoner.Points < 5).Include(p => p.Sector).ToListAsync();
+        return prisoners;
+    }
 }
