@@ -120,7 +120,7 @@ public class PrisonerController : ControllerBase
     {
         try
         {
-            return Ok(_prisonerService.GetPrisonerCount());
+            return Ok(_prisonerService.GetPrisonerCountAsync());
         }
         catch (Exception e)
         {
@@ -161,13 +161,13 @@ public class PrisonerController : ControllerBase
     
     [HttpPatch]
     [Route("addPoints")]
-    public async Task<ActionResult<Prisoner>> UpdatePrisoner([FromBody] String[] request)
+    public async Task<ActionResult<Prisoner>> AddPointsToPrisoner([FromBody] String[] request)
     {
         try
         {
             long.TryParse(request[0], out var id);
             int.TryParse(request[1], out var points);
-            await _prisonerService.AddPointsToPrisoner(id,points);
+            await _prisonerService.AddPointsToPrisonerAsync(id,points);
             return Ok();
         }
         catch (Exception e)
@@ -177,7 +177,7 @@ public class PrisonerController : ControllerBase
     }
     [HttpGet]
     [Route("lowBehaviour")]
-    public async Task<ActionResult<ICollection<Prisoner>>> GetPrisoners()
+    public async Task<ActionResult<ICollection<Prisoner>>> GetPrisonersWithLowBehaviour()
     {
         try
         {

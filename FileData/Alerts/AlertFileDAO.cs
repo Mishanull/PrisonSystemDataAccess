@@ -19,12 +19,7 @@ public class AlertFileDAO : IAlertService
         await _alertFileContext.SaveChangesAsync();
     }
 
-    public async Task<ICollection<Alert>> getAlertsAsync()
-    {
-        return _alertFileContext.Alerts!;
-    }
-
-    public async Task<ICollection<Alert>> getAlertsAsync(int pageNumber, int pageSize)
+    public async Task<ICollection<Alert>> GetAlertsAsync(int pageNumber, int pageSize)
     {
         return _alertFileContext.Alerts!.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
     }

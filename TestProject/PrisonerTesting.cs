@@ -110,7 +110,7 @@ public class PrisonerTesting
     public async Task NumberOfPrisoners_test()
     {
         var prisoners = await _prisonerService.GetPrisonersAsync();
-        int numOfAllPrisoners = _prisonerService.GetPrisonerCount();
+        int numOfAllPrisoners = _prisonerService.GetPrisonerCountAsync();
 
         Assert.That(prisoners.Count == numOfAllPrisoners);
     }

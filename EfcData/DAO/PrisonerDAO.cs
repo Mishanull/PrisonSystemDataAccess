@@ -99,7 +99,7 @@ public class PrisonerDAO : IPrisonerService
         return prisoner;
     }
 
-    public int GetPrisonerCount()
+    public int GetPrisonerCountAsync()
     {
         return _prisonSystemContext.Prisoners.Count();
     }
@@ -143,7 +143,7 @@ public class PrisonerDAO : IPrisonerService
         return numPrisPerSect;
     }
 
-    public async Task AddPointsToPrisoner(long id, int point)
+    public async Task AddPointsToPrisonerAsync(long id, int point)
     {
         Prisoner prisoner = await GetPrisonerByIdAsync(id);
         if (prisoner.Points + point > 12 || prisoner.Points + point < 0)

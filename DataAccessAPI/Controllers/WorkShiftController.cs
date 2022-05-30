@@ -123,7 +123,7 @@ public class WorkShiftController : ControllerBase
     
     [HttpGet]
     [Route("workShiftByGuard{guardId:long}")]
-    public async Task<ActionResult<WorkShift>> GetWorkShiftByGuardIdA(long guardId)
+    public async Task<ActionResult<WorkShift>> GetWorkShiftByGuardId(long guardId)
     {
         try
         {

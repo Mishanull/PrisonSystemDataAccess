@@ -32,7 +32,7 @@ public class GuardController : ControllerBase
 
     [HttpGet]
     [Route("{id:long}")]
-    public async Task<ActionResult<Guard>> GetGuardByIdAsync(long id)
+    public async Task<ActionResult<Guard>> GetGuardById(long id)
     {
         try
         {
@@ -82,7 +82,7 @@ public class GuardController : ControllerBase
     {
         try
         {
-            ICollection<Guard> guards = await _guardService.GetGuards();
+            ICollection<Guard> guards = await _guardService.GetGuardsAsync();
             return Ok(guards);
         }
         catch (Exception e)
@@ -97,7 +97,7 @@ public class GuardController : ControllerBase
     {
         try
         {
-            Sector sector = await _guardService.GetGuardBySector(id);
+            Sector sector = await _guardService.GetGuardBySectorAsync(id);
             return Ok(sector);
         }
         catch (Exception e)
@@ -156,7 +156,7 @@ public class GuardController : ControllerBase
     {
         try
         {
-            bool assigned = await _guardService.IsAssigned(id);
+            bool assigned = await _guardService.IsAssignedAsync(id);
             return Ok(assigned);
         }
         catch (Exception e)
@@ -170,7 +170,7 @@ public class GuardController : ControllerBase
     {
         try
         {
-            bool working = await _guardService.IsWorking(id);
+            bool working = await _guardService.IsWorkingAsync(id);
             return Ok(working);
         }
         catch (Exception e)

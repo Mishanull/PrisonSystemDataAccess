@@ -11,9 +11,9 @@ public interface IPrisonerService
     Task<ICollection<Prisoner>> GetPrisonersAsync();
     Task<ICollection<Prisoner>> GetPrisonersAsync(int pageNumber, int pageSize);
     Task<Prisoner> GetPrisonerBySsnAsync(string ssn);
-    public int GetPrisonerCount();
+    int GetPrisonerCountAsync();
     Task<ICollection<Prisoner>> GetPrisonersBySectorAsync(int pageNumber, int pageSize, long sectorId);
     Task<List<int>> GetNumPrisPerSectAsync();
-    Task AddPointsToPrisoner(long id, int points);
+    Task AddPointsToPrisonerAsync(long id, int points);
     Task<ICollection<Prisoner>> GetPrisonersWithLowBehaviourAsync();
 }

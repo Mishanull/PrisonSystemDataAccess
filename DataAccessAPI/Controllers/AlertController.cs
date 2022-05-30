@@ -40,7 +40,7 @@ public class AlertController : ControllerBase
     {
         try
         {
-            ICollection<Alert> alerts = await _alertService.getAlertsAsync(pageNumber, pageSize);
+            ICollection<Alert> alerts = await _alertService.GetAlertsAsync(pageNumber, pageSize);
             String response=JsonSerializer.Serialize(alerts);
             return Ok(response);
         }

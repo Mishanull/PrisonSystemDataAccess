@@ -54,12 +54,12 @@ public class GuardDAO : IGuardService
         return guardToUpdate;
     }
 
-    public async Task<ICollection<Guard>> GetGuards()
+    public async Task<ICollection<Guard>> GetGuardsAsync()
     {
         return _prisonSystemContext.Guards.ToList();
     }
 
-    public async Task<Sector> GetGuardBySector(long id)
+    public async Task<Sector> GetGuardBySectorAsync(long id)
     {
         Guard g = _prisonSystemContext.Guards.First(g => g.Id == id);
         WorkShift shift = _prisonSystemContext.WorkShifts.First(workShift => workShift!.Guards!.Contains(g));
@@ -92,7 +92,7 @@ public class GuardDAO : IGuardService
             .Include(sector => sector.Sector)
             .ToListAsync();
         ;
-        var numGuards = GetGuards().Result.Count;
+        var numGuards = GetGuardsAsync().Result.Count;
         int sect1 = 0, sect2 = 0, sect3 = 0;
         foreach (var workShift in workShifts)
         {
@@ -157,7 +157,7 @@ public class GuardDAO : IGuardService
         return numGuardPerSectToday;
     }
 
-    public async Task<bool> IsAssigned(long id)
+    public async Task<bool> IsAssignedAsync(long id)
     {
         ICollection<WorkShift> workShifts = await _prisonSystemContext.WorkShifts
             .Include(shift => shift.Guards)
@@ -181,7 +181,7 @@ public class GuardDAO : IGuardService
 
     }
 
-    public async Task<bool> IsWorking(long id)
+    public async Task<bool> IsWorkingAsync(long id)
     {
         ICollection<WorkShift> workShifts = await _prisonSystemContext.WorkShifts
             .Include(shift => shift.Guards)
