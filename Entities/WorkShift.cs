@@ -11,5 +11,9 @@ public class WorkShift
     public Sector? Sector { get; set; }
     public string? DaysOfWeek { get; set; }
     public ICollection<Guard>? Guards { get; set; }
-    
+
+    public override string ToString()
+    {
+        return $"Id: {Id}, Start: {Start}, End: {End}, Sector: {Sector}";
+    }
 }

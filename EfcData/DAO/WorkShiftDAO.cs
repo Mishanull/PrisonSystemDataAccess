@@ -46,7 +46,6 @@ public class WorkShiftDAO : IWorkShiftService
             .Include(shift => shift.Guards)
             .Include(sector => sector.Sector)
             .ToListAsync();
-        Console.WriteLine(shifts);
         return shifts;
     }
     
