@@ -93,11 +93,11 @@ public class GuardController : ControllerBase
 
     [HttpGet]
     [Route("{id:long}/Sector")]
-    public async Task<ActionResult<String>> GetGuardBySector([FromRoute] long id)
+    public async Task<ActionResult<String>> GetGuardSector([FromRoute] long id)
     {
         try
         {
-            Sector sector = await _guardService.GetGuardBySectorAsync(id);
+            Sector sector = await _guardService.GetGuardSector(id);
             return Ok(sector);
         }
         catch (Exception e)

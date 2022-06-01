@@ -14,7 +14,6 @@ public class AlertFileDAO : IAlertService
 
     public async Task AddAlertAsync(Alert alert)
     {
-        alert.DurationInMinutes /= 60;
         _alertFileContext.Alerts!.Add(alert);
         await _alertFileContext.SaveChangesAsync();
     }
@@ -26,7 +25,7 @@ public class AlertFileDAO : IAlertService
     
     public async Task<ICollection<Alert>> GetAlertsTodayAsync()
     {
-        ICollection<Alert> alerts =  _alertFileContext.Alerts.Where(alert => alert.DateTime > DateTime.Now - TimeSpan.FromHours(24)).ToList() ;
+        ICollection<Alert> alerts =  _alertFileContext!.Alerts!.Where(alert => alert.DateTime > DateTime.Now - TimeSpan.FromHours(24)).ToList() ;
         
         return alerts;
     }

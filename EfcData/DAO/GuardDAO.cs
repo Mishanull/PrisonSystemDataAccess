@@ -59,7 +59,7 @@ public class GuardDAO : IGuardService
         return _prisonSystemContext.Guards.ToList();
     }
 
-    public async Task<Sector> GetGuardBySectorAsync(long id)
+    public async Task<Sector> GetGuardSector(long id)
     {
         Guard g = _prisonSystemContext.Guards.First(g => g.Id == id);
         WorkShift shift = _prisonSystemContext.WorkShifts.First(workShift => workShift!.Guards!.Contains(g));
